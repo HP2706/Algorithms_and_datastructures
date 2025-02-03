@@ -212,6 +212,8 @@ generelt har
 \sum_{i=1}^{\frac{n}{2}} (\frac{n}{2} - i) = \frac{n}{2} \cdot \frac{n}{2} - \sum_{i=1}^{\frac{n}{2}} i = \frac{n^2}{4} - \frac{\frac{n}{2}(\frac{n}{2}+1)}{2} = \frac{n^2}{4} - \frac{n(n+2)}{8} = \frac{n^2-n-2n}{8} = \frac{n^2-3n}{8}
 \]
 
+dvs $T(n) = \Theta(n^2) $
+
 \begin{enumerate}
     \item $T(n) = O(n)$. forkert
     \item $T(n) = O(n\lg n)$. forkert
@@ -240,12 +242,24 @@ Second-Smallest(A,n)
 Hvilke udsagn gyldige løkke-invarianter ved starten af hver iteration i for-løkken? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
 \begin{enumerate}
-    \item $m = \min(A[1],\ldots,A[i-1])$.
-    \item $m = \min(A[1],\ldots,A[n])$.
-    \item $r \geq m$.
-    \item $m \geq 0$.
-    \item Mindst 1 element i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$.
-    \item Højst 2 elementer i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$.
+    \item $m = \min(A[1],\ldots,A[i-1])$. korrekt, m er det mindste element vi indtil videre ser i vores array
+    \item $m = \min(A[1],\ldots,A[n])$. nej, da $\min(A[1],\ldots,A[n]) \leq \min(A[1],\ldots,A[i-1])$
+    \item $r \geq m$. Korrekt. Dette kan bevises ved at betragte de to mulige cases i hver iteration:
+    \begin{enumerate}
+        \item Hvis $A[i] < m$: Vi sætter $r = m$ og $m = A[i]$, så efter opdateringen er $r$ (gamle $m$) større end $m$ (nye $A[i]$)
+        \item Hvis $A[i] \geq m$: To undercases:
+            \begin{itemize}
+                \item Hvis $A[i] < r$: Vi sætter $r = A[i]$, men da $A[i] \geq m$ gælder stadig $r \geq m$
+                \item Hvis $A[i] \geq r$: Ingen ændringer, så invarianten bevares
+            \end{itemize}
+    \end{enumerate}
+
+    I alle tilfælde bevares invarianten $r \geq m$.
+    \item $m \geq 0$. nej, m er det mindste element, og det mindste element kan godt være negativt
+    \item Mindst 1 element i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$. korrekt. da vi allerede har vist $r \geq m$ samt at der kan eksisterer elementer $x_1 \dots x_k = m \leq r$
+    \item Højst 2 elementer i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$. forkert.
+    Dette kan modbevises med et modeksempel: Hvis $A = [1,1,1,2]$, så vil vi efter tre iterationer have $m=1$, $r=1$, 
+    og dermed tre elementer der er mindre end eller lig med $r$.
 \end{enumerate}
 
 \section{Induktionsbeviser}
@@ -259,6 +273,31 @@ En diagonal deler en $n$-kant i en $n_1$-kant og en $n_2$ kant med en fælles ka
     \item a) Bevis ved induktion at antal diagonaler $d_n$ i en $n$-kant er lig med $n(n-3)/2$ for $n \geq 3$. Der lægges vægt på, at argumentationen er klar og koncis.
 \end{enumerate}
 
+\begin{enumerate}
+    \item \textbf{Base case:} For $n=3$, $d_3 = 0 = \frac{3(3-3)}{2}$, så formlen holder.
+    
+    \item \textbf{Induktionsskridt:} Antag at formlen holder for et vilkårligt $n \geq 3$, dvs.
+    induktionshypotesen er at $d_n = \frac{n(n-3)}{2}$.
+    
+    Vi skal vise at formlen også holder for $n+1$, dvs. at $d_{n+1} = \frac{(n+1)(n-2)}{2}$.
+    
+    Betragt en regulær $(n+1)$-kant. Fra et vilkårligt hjørne $v$ kan vi tegne diagonaler til alle
+    andre hjørner undtagen de to nabohjørner. Dette giver $(n+1-3) = n-2$ nye diagonaler fra $v$.
+    
+    De resterende diagonaler er præcis diagonalerne i den $n$-kant der fremkommer ved at fjerne
+    hjørnet $v$. Efter induktionshypotesen er antallet af disse diagonaler $\frac{n(n-3)}{2}$.
+    
+    Derfor er det totale antal diagonaler i $(n+1)$-kanten:
+    \begin{align*}
+        d_{n+1} &= (n-2) + \frac{n(n-3)}{2} \\
+        &= \frac{2(n-2) + n(n-3)}{2} \\
+        &= \frac{2n-4 + n^2-3n}{2} \\
+        &= \frac{n^2-n-4}{2} \\
+        &= \frac{(n+1)(n-2)}{2}
+    \end{align*}
+\end{enumerate}
+
+
 \section{Korrekthed og køretid}
 I denne opgave bruger vi matrix og vektor-notation, se evt. CLRS appendix D.1. Fibonacci-tallene $F_0, F_1, F_2,\ldots$ er defineret ved $F_0 = 0$, $F_1 = 1$, og $F_n = F_{n-1} + F_{n-2}$ for $n > 1$. Betragt nu matricen $A$ og søjlevektorer på formen $x = (x_1, x_2)^T$.
 
@@ -270,11 +309,72 @@ x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
 \begin{enumerate}
     \item Argumentér for at for $x = (F_{n-2}, F_{n-1})^T$ opfylder matrix-vektor produktet ligheden $Ax = (F_{n-1}, F_n)^T$ for $n > 1$.
     
-    \item Bevis at for $x = (0,1)^T$ gælder ligheden $A^{n-1}x = (F_{n-1}, F_n)^T$ for $n \geq 1$.
+    \[
+    A = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} (F_{n-2}, F_{n-1})^T \\ = 
+    \\ \begin{pmatrix} F_{n-1} \\ F_{n-1}+F_{n-2} \end{pmatrix} = \\
+    \begin{pmatrix} F_{n-1} \\ F_{n} \end{pmatrix} 
+    \]
+    
+    \item Bevis at for $x = (0,1)^T$ gælder ligheden $A^{n-1}x = (F_{n-1}, F_n)^T$ for $n \geq 1$. 
+    
+    vi viser dette ved induktion.
+
+    \begin{enumerate}
+        \item base case n=2. 
+        
+        $A^{2-1}(0,1)^T = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix}(0,1)^T = (1, 1) = (F_{1}, F_2) $
+
+        \item For n+1:
+        \begin{align*}
+        A^{n}(0,1)^T &= A(A^{n-1}(0,1)^T) \\
+        &= A(F_{n-1}, F_n)^T \text{ (by induction hypothesis)} \\
+        &= \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} F_{n-1} \\ F_n \end{pmatrix} \\
+        &= \begin{pmatrix} F_n \\ F_{n-1} + F_n \end{pmatrix} \\
+        &= \begin{pmatrix} F_n \\ F_{n+1} \end{pmatrix}
+        \end{align*}
+
+    \end{enumerate}
+
     
     \item Argumentér for at $A^{n-1}$, og dermed også $A^{n-1}x$, kan udregnes i tid $O(\lg n)$, hvis vi antager at multiplikation, addition og subtraktion tager konstant tid. (Start evt. med at se på tilfældet hvor $n-1$ er en potens af 2.)
     
+    Vi kan beregne $A^n$ effektivt ved at bruge kvadrering:
+    
+    For eksempel, for at beregne $A^{13}$:
+    \begin{align*}
+        13 &= (1101)_2 \\
+        A^{13} &= A^8 \cdot A^4 \cdot A^1
+    \end{align*}
+    
+    Vi kan beregne dette ved at:
+    \begin{enumerate}
+        \item Beregn $A^2 = A \cdot A$
+        \item Beregn $A^4 = A^2 \cdot A^2$
+        \item Beregn $A^8 = A^4 \cdot A^4$
+        \item Generelt $A^n = \prod_{log(n)} A^{\frac{n}{log(n)}}$
+    \end{enumerate}
+    
+    Dette kræver kun $O(\lg n)$ matrix-multiplikationer i stedet for $n-1$ multiplikationer ved naiv tilgang.
+
     \item Argumentér for at $F_n$ kan udregnes i tid $O(\lg n)$ hvis vi antager at aritmetiske operationer tager konstant tid.
+
+    Fra de foregående delspørgsmål har vi:
+    \begin{enumerate}
+        \item $A^{n-1}(0,1)^T = (F_{n-1}, F_n)^T$ (fra delspørgsmål b)
+        \item $A^{n-1}$ kan beregnes i tid $O(\lg n)$ (fra delspørgsmål c)
+    \end{enumerate}
+
+    For at beregne $F_n$ kan vi derfor:
+    \begin{enumerate}
+        \item Beregne $A^{n-1}$ i tid $O(\lg n)$
+        \item Multiplicere $A^{n-1}$ med vektoren $(0,1)^T$, hvilket tager konstant tid da $A$ er en $2 \times 2$ matrix
+        \item Aflæse $F_n$ 
+    \end{enumerate}
+
+    Da hver af disse trin enten tager $O(\lg n)$ eller $O(1)$ tid, og vi udfører dem sekventielt, er den samlede køretid $O(\lg n)$.
+
+
+
 \end{enumerate}
 
 
