@@ -1,0 +1,288 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{parskip} % Add this to remove paragraph indentation
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usepackage{listings}
+\usepackage{amsthm}  % Add this package for theorem-like environments
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{subcaption}  % For subfigures
+\bibliographystyle{plain}
+
+% Define theorem-like environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+
+\begin{document}
+
+
+
+\section{MergeSort}
+Antag at \textsc{MergeSort}$(A,p,r)$, implementeret som i CLRS sektion 2.3, bliver kaldt på 21 
+elementer (dvs. $r-p+1=21$). Hvor mange kald bliver der totalt lavet til \textsc{Merge-Sort}? 
+Hvad er antallet af kald generelt, når input har $n$ elementer? Argumentér for dine svar.
+
+For et array med længde 21 kan vi beregne det præcise antal kald til MergeSort således:
+
+\begin{enumerate}
+    \item Først beregner vi dybden af rekursionstræet:
+        \[ d = \lceil \log_2(21) \rceil =  \rceil = 5 \]
+    
+    \item På niveau $i$ i rekursionstræet har vi $2^i$ kald, hvor $i \in \{0,1,...,d-1\}$
+    
+    \item Det totale antal kald er summen over alle niveauer:
+        \[ \sum_{i=0}^{d-1} 2^i = 2^d - 1 = 2^5 - 1 = 31 \text{ kald} \]
+\end{enumerate}
+
+For et generelt input af størrelse $n$ får vi:
+\begin{itemize}
+    \item Dybde: $d = \lceil \log_2(n) \rceil$
+    \item Totalt antal kald: $2^{\lceil \log_2(n) \rceil} - 1$
+    \item Dette kan øvre-afgrænses ved $2^{\log_2(n) + 1} - 1 = 2n - 1 = \mathcal{O}(n)$
+\end{itemize}
+
+\section{Rekursionsligninger}
+Hvilke af disse rekursionsligninger har løsningen $T(n) = \Theta(n^2)$? Antag at $T(n) = 1$ for 
+$n \leq 1$. Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både 
+positive og negative svar).
+
+\begin{enumerate}
+    \item $T(n) = 4T(\lfloor n/2 \rfloor) + n\lg n$
+    
+    Vi kan bruge Master Theorem til at løse denne rekursionsligning.
+    
+    Lad os identificere parametrene:
+    \begin{itemize}
+        \item $a = 4$ (antal delproblemer)
+        \item $b = 2$ (reduktionsfaktor)
+        \item $f(n) = n\lg n$ (kombinationstid)
+    \end{itemize}
+    
+    Vi sammenligner $n^{\log_b a} = n^{\log_2 4} = n^2$ med $f(n) = n\lg n$:
+    
+    Da $n^2$ er asymptotisk større end $n\lg n$, og
+    \[ n^2 = \omega(n\lg n) \]
+    falder vi ind under tilfælde 1 af Master Theorem.
+    
+    Derfor er løsningen:
+    \[ T(n) = \Theta(n^{\log_2 4}) = \Theta(n^2) \]
+    
+    Dette bekræfter at $T(n) = \Theta(n^2)$ er en korrekt løsning for denne rekursionsligning.
+    
+    \item $T(n) = 4T(\lfloor n/2 \rfloor) + n^2$
+    
+    Anvendelse af Master Theorem:
+    \begin{itemize}
+        \item $a = 4$ (antal delproblemer)
+        \item $b = 2$ (reduktionsfaktor)
+        \item $\log_b a = \log_2 4 = 2$
+        \item $f(n) = n^2 = \Theta(n^{\log_b a} \log^k n) = \Theta(n^2 \log^0 n)$
+    \end{itemize}
+    
+    Dette falder under \textbf{Tilfælde 2} af Master Theorem med $k = 0$:
+    \[ T(n) = \Theta(n^{\log_b a} \log^{k+1} n) = \Theta(n^2 \log n) \]
+    
+    Konklusion: Denne rekursionsligning har \textit{ikke} løsningen $\Theta(n^2)$.
+    
+    \item $T(n) = 2T(\lfloor n/4 \rfloor) + n^2$
+    korrekt.vi bruger master theorem. 
+
+    \begin{itemize}
+        \item $a = 2$ (antal delproblemer)
+        \item $b = 4$ (reduktionsfaktor)
+        \item $f(n) = n^2$ 
+    \end{itemize}
+
+    vi er i case 3 da
+    \begin{enumerate}
+        \item $n^2 = \Omega(n^{log_4 2+\epsilon})$ for $epsilon < 14$.
+        \item $2*(n/4)^2 \leq c*n^2$ for $\frac{2}{16} < c < 1$
+    \end{enumerate}
+
+
+    \item $T(n) = 9T(\lfloor n/3 \rfloor) + n^3$
+    Vi bruger Master Theorem.
+    \begin{enumerate}
+        \item $a=9$
+        \item $b=3$
+        \item $f(n) = n^3$
+    \end{enumerate}
+    vi er i case 2 Da
+    $f(n)=n^3=\Theta(n^3 * lg^{k}*n)$ for k = 0
+
+    \item $T(n) = T(n-1) + n^2$
+    Forkert. Korrekt løsning er $\Theta(n^3)$. 
+    Vi viser det ved iteration:
+    
+    Udvikling af rekursionen:
+    \begin{align*}
+    T(n) &= T(n-1) + n^2 \\
+         &= T(n-2) + (n-1)^2 + n^2 \\
+         &\ \ \vdots \\
+         &= T(1) + \sum_{k=2}^n k^2 \\
+         &= \Theta(1) + \frac{n(n+1)(2n+1)}{6} - 1 \\
+         &= \Theta(n^3)
+    \end{align*}
+    
+    For at få $T(n) \leq c\cdot n^2$ skulle vi have:
+    \begin{align*}
+    c(n-1)^2 + n^2 &\leq cn^2 \\
+    cn^2 - 2cn + c + n^2 &\leq cn^2 \\
+    n^2 - 2cn + c &\leq 0
+    \end{align*}
+    Hvilket er umuligt for store $n$ da $n^2$ dominerer.
+
+    \item $T(n) = T(n-1) + n$
+    korrekt
+    Udvikling af rekursionen:
+    \begin{align*}
+    T(n) &= T(n-1) + n \\
+         &= T(n-2) + (n-1) + n \\
+         &\ \ \vdots \\
+         &= T(1) + \sum_{k=2}^n k \\
+         &= \Theta(1) + \frac{n(n+1)}{2} - 1 \\
+         &= \Theta(n^2)
+    \end{align*}
+\end{enumerate}
+
+\section{Del og hersk}
+Antag at du har en rekursiv algoritme $A$, og lad $n$ betegne størrelsen på algoritmens 
+input $X$. Hvis $n=1$ beregnes resultatet $A(X)$ i konstant tid. For $n > 1$ bruger algoritmen 
+først $O(n\lg n)$ tid på at beregne fire inputs $X_1, X_2, X_3, X_4$, hver af størrelse $\lfloor n/2 \rfloor$, og 
+$A(X_1), A(X_2), A(X_3), A(X_4)$ beregnes rekursivt. Endelig kombineres de rekursive svar til 
+et output $A(X)$ i tid $O(n^2)$. Skriv en rekursionsligning der beskriver en øvre grænse 
+på køretiden $T(n)$ af $A$ på input $X$ og find en løsning ved hjælp af master theorem. 
+Argumentér for dit svar.
+
+rekursionsligningen kan skrives som
+
+\[
+T(n) = \begin{cases}
+O(1) & \text{hvis } n = 1 \\
+4T(n/2) + O(n\lg n) + O(n^2) & \text{hvis } n > 1
+\end{cases}
+\]
+
+Da $O(n^2)$ dominerer $O(n\lg n)$, kan vi forenkle dette til:
+\[
+T(n) = 4T(n/2) + O(n^2)
+\]
+
+Vi bruger Master Theorem:
+\begin{itemize}
+    \item $a = 4$ (antal delproblemer)
+    \item $b = 2$ (reduktionsfaktor)
+    \item $f(n) = O(n^2)$ (kombinationstid)
+\end{itemize}
+
+Vi sammenligner $n^{\log_b a} = n^{\log_2 4} = n^2$ med $f(n) = n^2$:
+
+Da $n^2 = \Theta(n^2)$, falder vi ind under tilfælde 2 af Master Theorem med $k = 0$.
+Derfor er løsningen:
+\[ T(n) = \Theta(n^2 \lg n) \]
+
+\section{Køretid}
+Betragt følgende kode i pseudo-kode notationen fra CLRS:
+
+\begin{verbatim}
+Loops(n)
+1  r = 0
+2  for i = 1 to n/2
+3      for j = n/2 - i to n
+4          r = r + j
+5  return r
+\end{verbatim}
+
+Vi antager at $n/2$ er et heltal således at den yderste for-løkke har $n/2$ iterationer. Hvilke af følgende er gyldige udsagn om køretiden $T(n)$ af Loops$(n)$? (Læg mærke til at udsagnene ikke er uafhængige --- hvis der gælder $f(n) = O(n)$ så gælder også $f(n) = O(n\lg n)$, osv.) Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
+
+generelt har 
+
+\[
+\sum_{i=1}^{\frac{n}{2}} (\frac{n}{2} - i) = \frac{n}{2} \cdot \frac{n}{2} - \sum_{i=1}^{\frac{n}{2}} i = \frac{n^2}{4} - \frac{\frac{n}{2}(\frac{n}{2}+1)}{2} = \frac{n^2}{4} - \frac{n(n+2)}{8} = \frac{n^2-n-2n}{8} = \frac{n^2-3n}{8}
+\]
+
+\begin{enumerate}
+    \item $T(n) = O(n)$. forkert
+    \item $T(n) = O(n\lg n)$. forkert
+    \item $T(n) = O(n^2)$. korrekt
+    \item $T(n) = \Omega(n)$. korrekt 
+    \item $T(n) = \Omega(n\lg n)$. korrekt
+    \item $T(n) = \Omega(n^2)$. korrekt
+\end{enumerate}
+
+\section{Invarianter}
+Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A$ er en tabel af heltal og $n$ er længden af $A$.
+
+\begin{verbatim}
+Second-Smallest(A,n)
+1  m = A[1]
+2  r = ∞
+3  for i = 2 to n
+4      if A[i] < m
+5          r = m
+6          m = A[i]
+7      elseif A[i] < r
+8          r = A[i]
+9  return r
+\end{verbatim}
+
+Hvilke udsagn gyldige løkke-invarianter ved starten af hver iteration i for-løkken? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
+
+\begin{enumerate}
+    \item $m = \min(A[1],\ldots,A[i-1])$.
+    \item $m = \min(A[1],\ldots,A[n])$.
+    \item $r \geq m$.
+    \item $m \geq 0$.
+    \item Mindst 1 element i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$.
+    \item Højst 2 elementer i $A[1],\ldots,A[i-1]$ er mindre end eller lig med $r$.
+\end{enumerate}
+
+\section{Induktionsbeviser}
+I denne opgave betragter vi regulære $n$-kanter som disse eksempler ($n = 4$ og $n = 6$):
+
+Vi er interesserede i antal diagonaler, dvs. linier der forbinder to hjørner i $n$-kanterne og er helt indeholdt i figuren. En 3-kant har ingen diagonaler da alle hjørner er naboer, mens vi for $n = 4$ og $n = 6$ har henholdsvis 2 og 9 diagonaler.
+
+En diagonal deler en $n$-kant i en $n_1$-kant og en $n_2$ kant med en fælles kant og hvor $n_1 + n_2 = n + 2$. For eksempel deler 4-kantens diagonal den i to 3-kanter.
+
+\begin{enumerate}
+    \item a) Bevis ved induktion at antal diagonaler $d_n$ i en $n$-kant er lig med $n(n-3)/2$ for $n \geq 3$. Der lægges vægt på, at argumentationen er klar og koncis.
+\end{enumerate}
+
+\section{Korrekthed og køretid}
+I denne opgave bruger vi matrix og vektor-notation, se evt. CLRS appendix D.1. Fibonacci-tallene $F_0, F_1, F_2,\ldots$ er defineret ved $F_0 = 0$, $F_1 = 1$, og $F_n = F_{n-1} + F_{n-2}$ for $n > 1$. Betragt nu matricen $A$ og søjlevektorer på formen $x = (x_1, x_2)^T$.
+
+\[
+A = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} \qquad
+x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+\]
+
+\begin{enumerate}
+    \item Argumentér for at for $x = (F_{n-2}, F_{n-1})^T$ opfylder matrix-vektor produktet ligheden $Ax = (F_{n-1}, F_n)^T$ for $n > 1$.
+    
+    \item Bevis at for $x = (0,1)^T$ gælder ligheden $A^{n-1}x = (F_{n-1}, F_n)^T$ for $n \geq 1$.
+    
+    \item Argumentér for at $A^{n-1}$, og dermed også $A^{n-1}x$, kan udregnes i tid $O(\lg n)$, hvis vi antager at multiplikation, addition og subtraktion tager konstant tid. (Start evt. med at se på tilfældet hvor $n-1$ er en potens af 2.)
+    
+    \item Argumentér for at $F_n$ kan udregnes i tid $O(\lg n)$ hvis vi antager at aritmetiske operationer tager konstant tid.
+\end{enumerate}
+
+
+
+
+
+\end{document}
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
