@@ -41,15 +41,16 @@ For et array med længde 21 kan vi beregne det præcise antal kald til MergeSort
     
     \item På niveau $i$ i rekursionstræet har vi $2^i$ kald, hvor $i \in \{0,1,...,d-1\}$
     
-    \item Det totale antal kald er summen over alle niveauer:
-        \[ \sum_{i=0}^{d-1} 2^i = 2^d - 1 = 2^5 - 1 = 31 \text{ kald} \]
+    \item Det totale antal kald er summen over alle niveauer. 
+    Vi observerer at dette er en geometrisk serie med første led $a=1$ og kvotient $r=2$. For en geometrisk serie gælder generelt at $\sum_{i=0}^{n-1} ar^i = a\frac{r^n - 1}{r-1}$, som med vores værdier kan omskrives:
+        \[ \sum_{i=0}^{d-1} 2^i = \frac{2^d - 1}{2-1} = 2^d - 1 = 2^5 - 1 = 31 \text{ kald} \]
 \end{enumerate}
 
 For et generelt input af størrelse $n$ får vi:
 \begin{itemize}
     \item Dybde: $d = \lceil \log_2(n) \rceil$
     \item Totalt antal kald: $2^{\lceil \log_2(n) \rceil} - 1$
-    \item Dette kan øvre-afgrænses ved $2^{\log_2(n) + 1} - 1 = 2n - 1 = \mathcal{O}(n)$
+    \item Dette giver præcis $2^{\lceil \log_2(n) \rceil} - 1 = \Theta(n)$ kald
 \end{itemize}
 
 \section{Rekursionsligninger}
@@ -72,7 +73,7 @@ positive og negative svar).
     Vi sammenligner $n^{\log_b a} = n^{\log_2 4} = n^2$ med $f(n) = n\lg n$:
     
     Da $n^2$ er asymptotisk større end $n\lg n$, og
-    \[ n^2 = \omega(n\lg n) \]
+    \[ n^2 = \Omega(n\lg n) \]
     falder vi ind under tilfælde 1 af Master Theorem.
     
     Derfor er løsningen:
@@ -106,12 +107,13 @@ positive og negative svar).
 
     vi er i case 3 da
     \begin{enumerate}
-        \item $n^2 = \Omega(n^{log_4 2+\epsilon})$ for $epsilon < 14$.
+        \item $n^2 = \Omega(n^{log_4 2+\epsilon})$ for $\epsilon < 14$.
         \item $2*(n/4)^2 \leq c*n^2$ for $\frac{2}{16} < c < 1$
     \end{enumerate}
 
 
     \item $T(n) = 9T(\lfloor n/3 \rfloor) + n^3$
+    forkert
     Vi bruger Master Theorem.
     \begin{enumerate}
         \item $a=9$
@@ -120,6 +122,7 @@ positive og negative svar).
     \end{enumerate}
     vi er i case 2 Da
     $f(n)=n^3=\Theta(n^3 * lg^{k}*n)$ for k = 0
+    dermed er $T(n)=n^2*lg^{k}*n=n^2*1=n^2$
 
     \item $T(n) = T(n-1) + n^2$
     Forkert. Korrekt løsning er $\Theta(n^3)$. 
@@ -134,14 +137,6 @@ positive og negative svar).
          &= \Theta(1) + \frac{n(n+1)(2n+1)}{6} - 1 \\
          &= \Theta(n^3)
     \end{align*}
-    
-    For at få $T(n) \leq c\cdot n^2$ skulle vi have:
-    \begin{align*}
-    c(n-1)^2 + n^2 &\leq cn^2 \\
-    cn^2 - 2cn + c + n^2 &\leq cn^2 \\
-    n^2 - 2cn + c &\leq 0
-    \end{align*}
-    Hvilket er umuligt for store $n$ da $n^2$ dominerer.
 
     \item $T(n) = T(n-1) + n$
     korrekt
@@ -188,7 +183,7 @@ Vi bruger Master Theorem:
 
 Vi sammenligner $n^{\log_b a} = n^{\log_2 4} = n^2$ med $f(n) = n^2$:
 
-Da $n^2 = \Theta(n^2)$, falder vi ind under tilfælde 2 af Master Theorem med $k = 0$.
+Da $n^2 = \Theta(n^2)*lg^{k} n = \Theta(n^2)$, for $k = 0$, falder vi ind under tilfælde 2 af Master Theorem.
 Derfor er løsningen:
 \[ T(n) = \Theta(n^2 \lg n) \]
 

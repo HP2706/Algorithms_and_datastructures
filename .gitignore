@@ -7,3 +7,5 @@
 *.lot
 *.bbl
 *.DS_Store
+*.gz
+*main.synctex.gz

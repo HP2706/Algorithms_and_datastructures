@@ -1,0 +1,367 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{parskip} % Add this to remove paragraph indentation
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usepackage{listings}
+\usepackage{amsthm}  % Add this package for theorem-like environments
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{subcaption}  % For subfigures
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\bibliographystyle{plain}
+
+% Define theorem-like environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+
+\begin{document}
+
+\section{Definitions}
+
+\cite{devvrit2024matformernestedtransformerelastic}
+
+\begin{remark}
+We are mostly interested in functions $f$ from $\mathbb{N}$ to $\mathbb{R}_+ = [0,\infty)$.
+\end{remark}
+
+\begin{definition}[Big O]
+Let $f,g : \mathbb{N} \to \mathbb{R}_+$. We write $f(n) \leq O(g(n))$ if there are constants $C,n_0 > 0$ so that for all $n \geq n_0$,
+\[ f(n) \leq Cg(n). \]
+\end{definition}
+
+\begin{definition}[Big $\Omega$]
+Let $f,g : \mathbb{N} \to \mathbb{R}_+$. We write $f(n) \geq \Omega(g(n))$ if there are constants $c,n_0 > 0$ so that for all $n \geq n_0$,
+\[ f(n) \geq cg(n). \]
+\end{definition}
+
+\begin{remark}
+Comparing Big O and Big $\Omega$ notation:
+\begin{itemize}
+    \item Big O provides an upper bound on the growth rate of a function
+    \item Big $\Omega$ provides a lower bound on the growth rate of a function
+    \item The constants $C$ and $c$ in the definitions represent scaling factors
+    \item Both definitions require the inequality to hold for all values beyond some initial point $n_0$
+    \item If a function is both $O(g(n))$ and $\Omega(g(n))$, we say it is $\Theta(g(n))$, meaning it grows at exactly the same rate as $g(n)$
+\end{itemize}
+\end{remark}
+
+\begin{remark}
+The following proof demonstrates the equivalence between $f(n) \leq O(g(n))$ and $g(n) = \Omega(f(n))$, showing these are just different ways of expressing the same relationship between functions.
+\end{remark}
+
+\begin{proof}
+($\Rightarrow$) First, assume $f(n) \leq O(g(n))$. By definition, this means there exist constants $C, n_0 > 0$ such that for all $n \geq n_0$:
+\[ f(n) \leq Cg(n) \]
+
+Rearranging this inequality:
+\[ g(n) \geq \frac{1}{C}f(n) \]
+
+Let $c = \frac{1}{C}$. Since $C > 0$, we have $c > 0$. Therefore, there exists $c > 0$ and $n_0 > 0$ such that for all $n \geq n_0$:
+\[ g(n) \geq cf(n) \]
+
+This is precisely the definition of $g(n) = \Omega(f(n))$.
+
+($\Leftarrow$) Conversely, assume $g(n) = \Omega(f(n))$. By definition, this means there exist constants $c, n_0 > 0$ such that for all $n \geq n_0$:
+\[ g(n) \geq cf(n) \]
+
+Rearranging:
+\[ f(n) \leq \frac{1}{c}g(n) \]
+
+Let $C = \frac{1}{c}$. Since $c > 0$, we have $C > 0$. Therefore, there exists $C > 0$ and $n_0 > 0$ such that for all $n \geq n_0$:
+\[ f(n) \leq Cg(n) \]
+
+This is precisely the definition of $f(n) \leq O(g(n))$.
+
+Therefore, $f(n) \leq O(g(n))$ if and only if $g(n) = \Omega(f(n))$. \qed
+\end{proof}
+
+\section{Proofs}
+
+
+    \begin{align}
+        &\text{Proof by Strong Induction:} \notag \\[1em]
+        &\text{Base case: } n = 2 \text{ is prime, so } n = \prod_{i=1}^1 p_i \text{ where } p_1 = 2. \notag \\[1em]
+        &\text{Inductive Hypothesis: Assume the statement holds for all natural numbers } 2,3,\ldots,k. \notag \\[1em]
+        &\text{Consider } k+1: \notag \\
+        &\text{Case 1: If } k+1 \text{ is prime, then } k+1 = \prod_{i=1}^1 p_i \text{ where } p_1 = k+1. \notag \\[1em]
+        &\text{Case 2: If } k+1 \text{ is composite, then } k+1 = a \cdot b \text{ where } 1 < a,b < k+1. \notag \\
+        &\text{By the inductive hypothesis, } a = \prod_{i=1}^m p_i \text{ and } b = \prod_{j=1}^n q_j \text{ for some primes } p_i, q_j. \notag \\
+        &\text{Therefore, } k+1 = a \cdot b = \left(\prod_{i=1}^m p_i\right) \cdot \left(\prod_{j=1}^n q_j\right) = \prod_{l=1}^{m+n} r_l \notag \\
+        &\text{where } r_l \text{ represents the combined sequence of primes } p_i \text{ and } q_j. \notag \\[1em]
+        &\text{By the principle of strong induction, the statement holds for all } n > 1. \quad \square \notag
+    \end{align}
+
+\section{Exercises week1}
+
+\begin{enumerate}
+    \item Giv en formel for summen af de første $n$ ulige tal:
+    \[ S(n) = \sum_{i=1}^n (2i-1) \]
+
+    \[
+    \sum_{i=1}^n (2i-1) = -n + 2*\sum_{i=1}^n (i) = -n + \frac{2*(n(n+1))}{2} = -n + n^2 + n = n^2
+    \]
+
+    \item Vis at $n! \geq 2^n$ for $n \geq 4$.
+    
+    vi viser dette ved induktion.
+    \begin{enumerate}
+        \item base case: n=4
+        $4! = 4*3*2*1=24$
+        $2^4 = 16$
+        $4! \geq 2^4$
+
+        \item Vi anvender induktionshypotesen $n! \geq 2^n$
+        
+        For $n+1$ har vi:
+        \begin{align*}
+            (n+1)! &= (n+1) \cdot n! \\
+            &\geq (n+1) \cdot 2^n \quad \text{(fra induktionshypotesen)} \\
+            &> 2 \cdot 2^n \quad \text{(da $n+1 > 2$ for $n \geq 4$)} \\
+            &= 2^{n+1}
+        \end{align*}
+    \end{enumerate}
+
+    \item Fibonacci tallene defineres som $f_0 = 0$, $f_1 = 1$, $f_i = f_{i-1} + f_{i-2}$ for $i \geq 2$. Bevis at:
+    \[ \sum_{i=1}^n f_i^2 = f_n f_{n+1} \]
+
+    vi viser det ved induktion
+    \begin{enumerate}
+        \item base case: n=2
+        \[ \sum_{i=1}^2 f_i^2 = f_1^2 + f_2^2 = 1^2 + 1^2 = f_2 f_{3} = 1*2 = 2 \]
+        \item induktion step
+        \[ \sum_{i=1}^{n+1} f_i^2 = f_{n+1}^2 + \sum_{i=1}^n f_i^2 = f_{n+1}^2 + f_n f_{n+1} = f_{n+1}(f_{n+1} + f_{n}) = f_{n+1}f_{n+2}\]
+    \end{enumerate}
+
+    \item Vis at:
+    \[ \sum_{i=1}^n \frac{1}{i(i+1)} = \frac{n}{n+1} \]
+
+     vi viser det ved induktion
+    \begin{enumerate}
+        \item base case: n=2
+        \[ \sum_{i=1}^2 \frac{1}{i(i+1)} = \frac{1}{2}+\frac{1}{6} = \frac{4}{6} = \frac{2}{2+1}=\frac{2}{3}\]
+        \item induktion step
+        \[
+        \sum_{i=1}^{(n+1)} \frac{1}{i(i+1)} =  \frac{1}{(n+1)((n+2)} + \sum_{i=1}^n \frac{1}{i(i+1)} = \frac{1}{(n+1)((n+2)} + \frac{n}{n+1} =\] 
+        
+        \[
+        \frac{1}{(n+1)(n+2)} + \frac{n(n+2)}{(n+1)(n+2)} = \frac{1+n(n+2)}{(n+1)(n+2)} =  \frac{(n+1)(n+1)}{(n+1)(n+2)} = \frac{n+1}{n+2}
+        \]
+    \end{enumerate}
+\end{enumerate}
+
+\section{Opgave 8}
+\section{Løkkeinvarianter}
+
+Vi skal nu bruge induktion til at bevise korrekthed af programmer (specifikt løkker). Vi kigger på følgende algoritme:
+
+\begin{algorithm}
+\caption{Marbles}
+\begin{algorithmic}[1]
+\State $i \leftarrow n$
+\While{$i \geq 1$}
+    \State Pick two arbitrary marbles $m_1, m_2$ from the jar.
+    \If{Color$(m_1)$ = Color$(m_2)$}
+        \State Throw the two marbles away
+        \State Place a RED marble in the jar.
+    \Else
+        \State Throw away the RED marble
+        \State Put the BLUE marble back in the jar.
+    \EndIf
+    \State $i \leftarrow i-1$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+Vi ønsker at argumentere om følgende:
+
+\begin{enumerate}
+    \item Algorithm 1 terminerer med køretid $O(n)$.
+    
+    For at bevise at algoritmen terminerer med køretid $O(n)$, kan vi observere følgende:
+
+    \begin{enumerate}
+    \item \textbf{Løkkeinvariant:} Ved starten af hver iteration er $i$ altid mindre end værdien af $i$ i forrige iteration.
+    
+        \begin{enumerate}
+            \item \textbf{Initialisation:} $i$ starter med værdien $n$.
+            
+            \item \textbf{Vedligeholdelse:} I hver iteration decrementeres $i$ med 1 (linje 11: $i \leftarrow i-1$).
+            
+            \item \textbf{Terminering:} Løkken fortsætter så længe $i \geq 1$. Da $i$ reduceres med 1 i hver iteration, 
+            og starter fra $n$, vil løkken køre præcis $n$ gange før $i < 1$.
+        \end{enumerate}
+
+    \item Der er netop 1 kugle tilbage i urnen, hvad er farven af den sidste kugle? TODO
+    
+    den vil altid være rød. 
+    3 muligheder.
+    rød, rød -> en rød
+    rød, blå -> blå, blå -> rød
+    blå, blå -> rød
+\end{enumerate}
+
+\end{enumerate}
+
+\section{Løkkeinvarianter 2024 eksamen opgave 4 (4\%)}
+
+Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A[1:n]$ er et array af heltal og $n > 1$ er længden af $A$.
+
+\begin{algorithm}
+\caption{InTheLoop}
+\begin{algorithmic}[1]
+\State $a \leftarrow \max\{A[1], A[2]\}$
+\State $b \leftarrow \min\{A[1], A[2]\}$
+\For{$i = 3$ to $n$}
+    \If{$A[i] \geq a$}
+        \State $b \leftarrow a$
+        \State $a \leftarrow A[i]$
+    \ElsIf{$A[i] \geq b$}
+        \State $b \leftarrow A[i]$
+    \EndIf
+\EndFor
+\State \Return $b$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Eksempel:} For $n = 5$ og $A = \langle 6,4,-2,6,7 \rangle$ returnerer InTheLoop værdien 6.
+
+Hvilke udsagn er gyldige invarianter, der er sande umiddelbart efter udførelsen if-sætningen i linje 4-8 (\emph{inden} variablen $i$ bliver øget med 1)? Vælg ét eller flere korrekte svar.
+
+\begin{enumerate}
+    \item $a \geq 0$
+    \item $b \geq 0$
+    \item $a \geq b$ true
+    \item $a > b$
+    \item $a = \max_{1 \leq j \leq i} A[j]$ True
+    \item $b = \min_{1 \leq j \leq i} A[j]$
+\end{enumerate}
+
+\section{2024 eksamen opgave 20: Induktionsbevis for køretid (8\%)}
+
+En algoritme tager tid $T(n) = n^2+\sum_{i=1}^n \binom{i+1}{2}$ på et input af størrelse $n$, hvor $\binom{i+1}{2} = \frac{i(i+1)}{2}$.
+Vi ønsker at vise at køretiden overholder $T(n) \leq 2n^3$ for alle $n \geq 1$.
+
+\begin{enumerate}
+    \item Vis at $T(1) = 2$. Skriv dit svar på side 3 i Word dokumentet.
+    
+    $T(1) = 1^2 + \sum_{i=1}^1 \binom{i+1}{2} = 1^2 + 1 = 2$
+    
+    \item Vis $T(n) \leq 2n^3$ ved induktion. Skriv dit svar på side 4 i Word dokumentet.
+    
+    $T(n+1) = (n+1)^2+\sum_{i=1}^{(n+1)} \frac{i(i+1)}{2}$
+    $= (n+1)^2 + \sum_{i=1}^{n+1} \frac{i(i+1)}{2}$
+    $\leq (n+1)^2 + \sum_{i=1}^{n+1} i^2$ (since $\frac{i(i+1)}{2} \leq i^2$ for $i \geq 1$)
+    $= (n+1)^2 + \frac{(n+1)(n+2)(2n+3)}{6}$ (using sum of squares formula)
+    $\leq (n+1)^2 + (n+1)^3$ (since $\frac{(n+2)(2n+3)}{6} \leq (n+1)^2$ for $n \geq 1$)
+    $\leq 2(n+1)^3$ (since $(n+1)^2 \leq (n+1)^3$ for $n \geq 1$)
+
+    Therefore, by induction, $T(n) \leq 2n^3$ for all $n \geq 1$. \qed
+\end{enumerate}
+
+\section{Løkkeinvarianter 2024 april eksamen opgave 4 (4\%)}
+
+Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A$ er et array af reelle tal og $n$ er længden af $A$.
+
+\begin{algorithm}
+\caption{Variance}
+\begin{algorithmic}[1]
+\State $r \leftarrow 0$
+\State $s \leftarrow 0$
+\For{$i = 1$ to $n$}
+    \State $r \leftarrow r + A[i] \cdot A[i]$
+    \State $s \leftarrow s + A[i]$
+\EndFor
+\State \Return $r/n - (s \cdot s)/(n \cdot n)$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Eksempel:} For $n = 4$ og $A = \langle \frac{1}{2}, 2, 0, -\frac{1}{2} \rangle$ returnerer VARIANCE værdien $7/8$.
+
+Hvilke udsagn er gyldige løkke-invarianter, der er sande efter udførelsen af linje 5 i for-løkken? Vælg ét eller flere korrekte svar.
+
+\begin{enumerate}
+    \item $s \leq r$ forkert da $A[i]^2 \leq A[i]$ for $A[i] \in [0,1)$ 
+    \item $s \geq 0$ forkert
+    \item $r \geq 0$ korrekt, da $A[i]^2 \in \mathbb{R}_{+}$ 
+    \item $i \geq 0$ sand $i \in [1, n]$
+    \item $s = \sum_{j=1}^n A[j]$ forkert 
+    \item $r = \sum_{j=1}^i A[j]^2$ korrekt
+    \item $i \leq n$ korrekt 
+\end{enumerate}
+
+
+\section{Induktionsbeviser (7\%)}
+Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A$ er et array af heltal, $n$ er længden af $A$, og $b$ er en heltalsparameter.
+
+\begin{algorithm}
+\caption{HeavyHitter}
+\begin{algorithmic}[1]
+\State let $r[1:b]$ be a new array
+\For{$i = 1$ to $b$}
+    \State $r[i] = 0$
+\EndFor
+\For{$j = 1$ to $n$}
+    \If{$A[j] \geq 1$ and $A[j] \leq b$}
+        \State $r[A[j]] = r[A[j]] + 1$
+    \EndIf
+\EndFor
+\State \Return $\max_{1 \leq \ell \leq b}(r[\ell])$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Eksempel:} For $n = 6$, $b = 10$, $A = \langle 5,1,1,7,1,3 \rangle$ returnerer HeavyHitter værdien 3.
+
+a) Forklar i ord hvad HeavyHitter beregner. 
+
+HeavyHitter beregner frekvensen af det tal, der forekommer flest gange i array A, men kun blandt tal i intervallet [1,b]. Algoritmen:
+1. Opretter et tællerarray r af længde b
+2. For hvert element i A, hvis elementet er mellem 1 og b (inklusiv), øges den tilsvarende tæller i r
+3. Returnerer den højeste frekvens (største tællerværdi) fundet i r
+
+For eksempel, givet A = ⟨5,1,1,7,1,3⟩ og b = 10:
+- Tallet 1 forekommer 3 gange
+- Tallet 3 forekommer 1 gang
+- Tallet 5 forekommer 1 gang
+- Tallet 7 forekommer 1 gang
+- Alle andre tal forekommer 0 gange
+Derfor returneres 3, som er den højeste frekvens.
+
+b) Løkkeinvariant $I(j)$: For alle $\ell \in [1,b]$ gælder at $r[\ell]$ er lig med antallet af forekomster af værdien $\ell$ blandt de første $j$ elementer i $A$ (dvs. $A[1..j]$).
+
+Bevis ved induktion:
+
+\textbf{Basis} ($j = 0$):
+Før løkken starter er $r[\ell] = 0$ for alle $\ell \in [1,b]$, hvilket er korrekt da vi endnu ikke har set nogen elementer fra $A$.
+
+\textbf{Induktionsskridt}:
+Antag at $I(k)$ gælder for et $k \geq 0$. Vi skal vise at $I(k+1)$ også gælder.
+
+Ved iteration $k+1$ undersøges $A[k+1]$:
+\begin{itemize}
+    \item Hvis $1 \leq A[k+1] \leq b$: $r[A[k+1]]$ øges med 1, hvilket korrekt tæller den nye forekomst
+    \item Hvis $A[k+1] < 1$ eller $A[k+1] > b$: $r$ forbliver uændret, hvilket er korrekt da vi kun tæller værdier i intervallet $[1,b]$
+\end{itemize}
+
+Alle andre positioner i $r$ forbliver uændrede. Derfor vedligeholder iterationen invarianten.
+
+\textbf{Konklusion}:
+Når løkken terminerer gælder $I(n)$, hvilket betyder at $r[\ell]$ indeholder det totale antal forekomster af værdien $\ell$ i hele array $A$. Dette understøtter at $\max_{1 \leq \ell \leq b}(r[\ell])$ returnerer frekvensen af det hyppigst forekommende tal i intervallet $[1,b]$.
+
+\end{document}
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
