@@ -30,7 +30,6 @@
 
 \section{Definitions}
 
-\cite{devvrit2024matformernestedtransformerelastic}
 
 \begin{remark}
 We are mostly interested in functions $f$ from $\mathbb{N}$ to $\mathbb{R}_+ = [0,\infty)$.
@@ -103,7 +102,7 @@ Therefore, $f(n) \leq O(g(n))$ if and only if $g(n) = \Omega(f(n))$. \qed
         &\text{By the principle of strong induction, the statement holds for all } n > 1. \quad \square \notag
     \end{align}
 
-\section{Exercises week1}
+\section{Exercises 5/2}
 
 \begin{enumerate}
     \item Giv en formel for summen af de første $n$ ulige tal:
@@ -161,8 +160,8 @@ Therefore, $f(n) \leq O(g(n))$ if and only if $g(n) = \Omega(f(n))$. \qed
     \end{enumerate}
 \end{enumerate}
 
-\section{Opgave 8}
-\section{Løkkeinvarianter}
+\subsection{Opgave 8}
+\subsection{Løkkeinvarianter}
 
 Vi skal nu bruge induktion til at bevise korrekthed af programmer (specifikt løkker). Vi kigger på følgende algoritme:
 
@@ -214,7 +213,7 @@ Vi ønsker at argumentere om følgende:
 
 \end{enumerate}
 
-\section{Løkkeinvarianter 2024 eksamen opgave 4 (4\%)}
+\subsection{Løkkeinvarianter 2024 eksamen opgave 4 (4\%)}
 
 Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A[1:n]$ er et array af heltal og $n > 1$ er længden af $A$.
 
@@ -248,7 +247,7 @@ Hvilke udsagn er gyldige invarianter, der er sande umiddelbart efter udførelsen
     \item $b = \min_{1 \leq j \leq i} A[j]$
 \end{enumerate}
 
-\section{2024 eksamen opgave 20: Induktionsbevis for køretid (8\%)}
+\subsection{2024 eksamen opgave 20: Induktionsbevis for køretid (8\%)}
 
 En algoritme tager tid $T(n) = n^2+\sum_{i=1}^n \binom{i+1}{2}$ på et input af størrelse $n$, hvor $\binom{i+1}{2} = \frac{i(i+1)}{2}$.
 Vi ønsker at vise at køretiden overholder $T(n) \leq 2n^3$ for alle $n \geq 1$.
@@ -270,7 +269,7 @@ Vi ønsker at vise at køretiden overholder $T(n) \leq 2n^3$ for alle $n \geq 1$
     Therefore, by induction, $T(n) \leq 2n^3$ for all $n \geq 1$. \qed
 \end{enumerate}
 
-\section{Løkkeinvarianter 2024 april eksamen opgave 4 (4\%)}
+\subsection{Løkkeinvarianter 2024 april eksamen opgave 4 (4\%)}
 
 Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A$ er et array af reelle tal og $n$ er længden af $A$.
 
@@ -302,7 +301,7 @@ Hvilke udsagn er gyldige løkke-invarianter, der er sande efter udførelsen af l
 \end{enumerate}
 
 
-\section{Induktionsbeviser (7\%)}
+\subsection{Induktionsbeviser (7\%)}
 Betragt følgende funktion, i pseudo-kode notationen fra CLRS, hvor input $A$ er et array af heltal, $n$ er længden af $A$, og $b$ er en heltalsparameter.
 
 \begin{algorithm}
@@ -359,9 +358,426 @@ Alle andre positioner i $r$ forbliver uændrede. Derfor vedligeholder iteratione
 \textbf{Konklusion}:
 Når løkken terminerer gælder $I(n)$, hvilket betyder at $r[\ell]$ indeholder det totale antal forekomster af værdien $\ell$ i hele array $A$. Dette understøtter at $\max_{1 \leq \ell \leq b}(r[\ell])$ returnerer frekvensen af det hyppigst forekommende tal i intervallet $[1,b]$.
 
-\end{document}
+
+\section{Exercises 10/2}
+CLRS problem 3-4, 3-2, 3-1. 
 
 
+\subsection{3-1 Asymptotic behavior of polynomials}
+Let
+\[
+p(n) = \sum_{i=0}^{d} a_i n^i,
+\]
+where \( a_d > 0 \), be a degree-\( d \) polynomial in \( n \), and let \( k \) be a constant. Use the definitions of the asymptotic notations to prove the following properties.
+
+First, let's recall the formal definitions of the asymptotic notations:
+
+\begin{definition}[Big O]
+For a given function $g(n)$, we denote by $O(g(n))$ the set of functions:
+\[ O(g(n)) = \{f(n): \text{ there exist positive constants } c \text{ and } n_0 \text{ such that } 0 \leq f(n) \leq cg(n) \text{ for all } n \geq n_0\} \]
+\end{definition}
+
+\begin{definition}[Big $\Omega$]
+For a given function $g(n)$, we denote by $\Omega(g(n))$ the set of functions:
+\[ \Omega(g(n)) = \{f(n): \text{ there exist positive constants } c \text{ and } n_0 \text{ such that } 0 \leq cg(n) \leq f(n) \text{ for all } n \geq n_0\} \]
+\end{definition}
+
+\begin{definition}[Big $\Theta$]
+For a given function $g(n)$, we denote by $\Theta(g(n))$ the set of functions:
+\[ \Theta(g(n)) = \{f(n): \text{ there exist positive constants } c_1, c_2 \text{ and } n_0 \text{ such that } 0 \leq c_1g(n) \leq f(n) \leq c_2g(n) \text{ for all } n \geq n_0\} \]
+\end{definition}
+
+Note that $f(n) = \Theta(g(n))$ if and only if $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$.
+
+
+\begin{enumerate}
+    \item[a.] If \( k \geq d \), then \( p(n) = O(n^k) \).
+
+    \begin{proof}
+    Let \( p(n) = \sum_{i=0}^d a_i n^i \) where \( a_d > 0 \). We need to show there exist constants \( C > 0 \) and \( n_0 \) such that \( p(n) \leq Cn^k \) for all \( n \geq n_0 \).
+
+    For any \( n \geq 1 \):
+    \[ p(n) = \sum_{i=0}^d a_i n^i = a_d n^d + \sum_{i=0}^{d-1} a_i n^i \]
+
+    Since \( k \geq d \), we have \( n^d \leq n^k \). Therefore:
+    \[ p(n) \leq a_d n^k + \sum_{i=0}^{d-1} |a_i| n^i \]
+
+    For \( n \geq 1 \), we have \( n^i \leq n^k \) for all \( i \leq d \leq k \). Thus:
+    \[ p(n) \leq a_d n^k + n^k \sum_{i=0}^{d-1} |a_i| = \left(a_d + \sum_{i=0}^{d-1} |a_i|\right)n^k \]
+
+    Let \( C = a_d + \sum_{i=0}^{d-1} |a_i| \) and \( n_0 = 1 \). Then for all \( n \geq n_0 \):
+    \[ p(n) \leq Cn^k \]
+
+    Therefore, \( p(n) = O(n^k) \).
+    \end{proof}
+    \item[b.] If \( k \leq d \), then \( p(n) = \Omega(n^k) \).
+    \begin{proof}
+
+    For any \( n \geq 1 \):
+    \[ p(n) = \sum_{i=0}^d a_i n^i = a_d n^d + \sum_{i=0}^{d-1} a_i n^i \]
+
+    Since \( k \leq d \), we have \( n^d \geq n^k \). Therefore:
+    \[ p(n) \geq a_d n^k + \sum_{i=0}^{d-1} |a_i| n^i \]
+
+    For \( n \geq 1 \), we have \( n^i \geq n^k \) for all \( i \leq k \leq d \). Thus:
+    \[ p(n) \geq a_d n^k + n^k \sum_{i=0}^{d-1} |a_i| = \left(a_d + \sum_{i=0}^{d-1} |a_i|\right)n^k \]
+
+    Let \( C = a_d + \sum_{i=0}^{d-1} |a_i| \) and \( n_0 = 1 \). Then for all \( n \geq n_0 \):
+    \[ p(n) \geq Cn^k \]    
+    \end{proof}
+
+    \item[c.] If \( k = d \), then \( p(n) = \Theta(n^k) \).
+    
+    \begin{proof}
+
+        For any \( n \geq 1 \):
+        \[ p(n) = \sum_{i=0}^d a_i n^i = a_d n^d + \sum_{i=0}^{d-1} a_i n^i \]
+    
+        Since \( k = d \), we have \( n^d = n^k \). Therefore:
+        \[ p(n) = a_d n^k + \sum_{i=0}^{d-1} a_i n^i \] 
+
+        thus 
+        \[ a_d n^k + \sum_{i=0}^{d-1} a_i n^i \leq (a_d + \sum_{i=0}^{d-1} a_i)  n^k = c_1 * n^k\]
+        this implies \[p(n) \leq c_1 * n^k \forall n \geq n_0\] and thus \[
+        p(n) = \omega(n^k)\]
+        and by the same argument
+        \[ a_d n^k + \sum_{i=0}^{d-1} a_i n^i \geq (a_d + \sum_{i=0}^{d-1} |a_i|)  n^k = c_2 * n^k\] this implies \[p(n) \geq c_2 * n^k \forall n \geq n_0\] and thus \[
+        p(n) = O(n^k)\]
+        
+        \[p(n) = O(n^k) = \Omega(n^k) \implies p(n) = \Theta(n^k)\] 
+
+
+    \end{proof}
+    
+    \item[d.] If \( k > d \), then \( p(n) = o(n^k) \).
+    same argument as by A
+    \item[e.] If \( k < d \), then \( p(n) = \omega(n^k) \).
+    same argument as by B
+\end{enumerate}
+
+\subsection{3-2 Relative asymptotic growths}
+Indicate, for each pair of expressions (\( A, B \)) in the table below whether \( A \) is \( O \), \( o \), \( \Omega \), \( \omega \), or \( \Theta \) of \( B \). Assume that \( k \geq 1 \), \( \epsilon > 0 \), and \( c > 1 \) are constants. Write your answer in the form of the table with "yes" or "no" written in each box.
+
+\[
+\begin{array}{|c|c|c|c|c|c|c|}
+\hline
+A & B & O & o & \Omega & \omega & \Theta \\
+\hline
+\log^k n & n^\epsilon & x &   &  &  &  \\
+n^k & c^n & x &  &  &  &  \\
+\sqrt{n} & n^{\sin n} &  &  &  &  &  x\\
+2^n & 2^{n/2} &  &  &  & x &  \\
+n^{\log c} & c^{\log n} &  &  &  &  & x \\
+\log(n!) & \log(n^n) &  x &  &  &  &  \\
+\hline
+\end{array}
+\]
+
+\subsection{3-4 Asymptotic notation properties}
+Let \( f(n) \) and \( g(n) \) be asymptotically nonnegative functions. Prove or disprove each of the following conjectures.
+
+\begin{enumerate}
+    \item[a.] \( f(n) = O(g(n)) \) implies \( g(n) = \Omega(f(n)) \).
+    if \( f(n) = O(g(n)) \) then $\exists n_0 \in \mathbb{N}, c \in \mathbb{R}$ st $f(n) \leq c*g(n) \forall n \geq n_0$ and thus $c*f(n) \leq g(n) \forall n \geq n_0$ and thus the statement is proven.
+    \item[b.] \( f(n) + g(n) = \Theta(\min \{ f(n), g(n) \}) \).
+    this is false... TODO
+    \item[c.] \( f(n) = O(g(n)) \) implies \( \log f(n) = O(\log g(n)) \).
+    This is false. Consider the counterexample:
+    Let \( f(n) = n^2 \) and \( g(n) = n \). Then \( f(n) = O(g(n)^2) \), so \( f(n) = O(g(n)) \).
+    However, \( \log f(n) = \log(n^2) = 2\log(n) \) is not \( O(\log g(n)) = O(\log n) \).
+    \item[d.] \( f(n) = O(g(n)) \) implies \( 2^{f(n)} = O(2^{g(n)}) \).
+    yes as by definition $\exists c > 0 \in R, \exists n_0 \in N$
+    \( f(n) = c*g(n)\) and since $a > b \implies 2^a > 2^b$
+    \item[e.] \( f(n) = O(g(n)) \) implies \( g(n) = O(f(n)) \).
+    no consider $f(n) = n^2, g(n) = n^3$ then
+    $f(n) = O(g(n))$ but $g(n) \neq O(f(n))$ since $n^3 \geq n^2$ for all c and $n_0$
+    \item[f.] \( f(n) = O(g(n)) \) implies \( g(n) = O(2^{f(n)}) \).
+    no, consider $f(n) = \frac{1}{n}, g(n) = n^2$ then $f(n) = O(g(n))$ but $2^n \neq O(2^{\frac{1}{n}}) $
+    \item[g.] \( f(n) = \Theta(g(n)) \). it depends
+    \item[h.] \( f(n) + o(f(n)) = \Theta(f(n)) \). no
+\end{enumerate}
+
+
+
+\subsection{Algoritmeanalyse I (4\%)(opgave 5, exam june 2024)}
+Betragt denne algoritme der tager et array $A[1:n]$ af heltal som input og returnerer et array $B[1:n]$.
+
+\begin{algorithm}
+\caption{MinAlgoritme}
+\begin{algorithmic}[1]
+\State Let $B[1:n]$ be a new array
+\State $k = 1$
+\For{$i = 1$ to $n$}
+    \If{$A[i] < A[k]$}
+        \State $k = i$
+    \EndIf
+    \State $B[i] = A[k]$
+\EndFor
+\State \Return $B$
+\end{algorithmic}
+\end{algorithm}
+
+Hvilke af følgende udsagn gælder altid om $B$, der returneres af MinAlgoritme$(A,n)$, uanset indholdet af $A$? Vælg ét eller flere korrekte svar.
+
+\begin{enumerate}
+    \item Sekvensen $B[1],\ldots,B[n]$ er ikke-aftagende. forkert(hvis vi tæller 0 med)
+    \item Sekvensen $B[1],\ldots,B[n]$ er ikke-voksende. korrekt
+    \item $B$ indeholder en delmængde af tallene fra $A$. korrekt
+    \item $B$ indeholder det største tal fra $A$. forket
+    \item For hvert $i \in \{1,\ldots,n\}$ gælder $B[i] = \min_{1\leq j\leq i} A[j]$. korrekt
+    \item For hvert $i \in \{1,\ldots,n\}$ gælder $B[i] = \min_{i\leq j\leq n} A[j]$. forkert
+\end{enumerate}
+
+\subsection{Algoritmeanalyse II (4\%) (opgave 6, exam june 2024)}
+Betragt denne algoritme der som argument tager et array $A[1:n]$ med heltal. Algoritmen ændrer på indeholdet i $A$ (call by reference), i stil med QuickSort.
+
+\begin{algorithm}
+\caption{SortHumor}
+\begin{algorithmic}[1]
+\If{$n > 1$}
+    \State SortHumor$(A, n-1)$
+    \If{$A[n-1] > A[n]$}
+        \State exchange $A[n-1]$ with $A[n]$
+    \EndIf
+    \State SortHumor$(A, n-1)$
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+Hvilke af følgende udsagn gælder? Vælg ét eller flere korrekte svar.
+\begin{enumerate}
+    \item SortHumor sorterer $A$ i ikke-aftagende rækkefølge. korrekt
+    \item SortHumor sorterer $A$ i ikke-voksende rækkefølge. forkert
+    \item Køretiden af SortHumor er $\Theta(n\log n)$. forkert 
+    \item Køretiden af SortHumor er $\Theta(n^2)$. forkert
+    \item Køretiden af SortHumor er $\Theta(2^n)$. sandt
+\end{enumerate}
+
+\subsection{Køretid (9\%)(opgave 21 exam june 2024)}
+Antag i det følgende at $A[1:n]$ er et array af $n$ heltal og at $k$ er et heltal. Vi betragter disse to funktioner:
+
+\begin{algorithm}
+\caption{PrefixSum}
+\begin{algorithmic}[1]
+\State $s = 0$
+\If{$k > n$}
+    \State $t = n$
+\Else
+    \State $t = k$
+\EndIf
+\For{$i = 1$ to $t$}
+    \State $s = s + A[i]$
+\EndFor
+\State \Return $s$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{PowerSums}
+\begin{algorithmic}[1]
+\State $k = 1$
+\State $s = 0$
+\While{$k < n$}
+    \State $s = s + \text{PrefixSum}(A, n, k)$
+    \State $k = 2 \cdot k$
+\EndWhile
+\State \Return $s$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{enumerate}
+    \item Angiv en asymptotisk grænse på køretiden for PrefixSum med brug af store-$\Theta$ notation, som funktion af variablerne $n$ og $k$. Argumentér kort for dit svar.
+    
+    siden prefix sum løber over min(n, k) elementer. køretiden for prefix sum er $\Theta(min(n, k))$
+
+    \item Angiv antal iterationer for while løkken i PowerSums med brug af store-$\Theta$ notation, som funktion af $n$. Argumentér kort for dit svar.
+    
+    $\Theta(log n)$
+
+    \item Angiv en øvre grænse for køretiden af PowerSums og udtryk den i store-$\Theta$ notation, som en simpel funktion af $n$. Argumentér kort for dit svar.
+    
+    we do the following amount of work
+
+    $\sum_{i=0}^{log(n)} 2^i = 2^{log(n)+1} - 1= \Theta(n) $
+
+\end{enumerate}
+
+\section{Exercises 12/2}
+%Opgave 1, 2, 3 og 7 fra juni2024
+%Opgave 1, 2 og 3 fra AD-April-2024
+%Opgave 1, task 1-6 fra Opgavesamling Download Opgavesamling. 
+
+
+
+\subsection{Opgave 1, task 1-6 fra Opgavesamling}
+
+\subsubsection{1.1 Recurrence Analysis}
+The CPS Brewing Company (CPSBC) has a wide selection of beers, and every time they introduce a new one they always sell it for cheap. The next year they up the price a bit, and again the following year, and so on. In this devious pricing scheme the price of a beer in 2022 may depend on the price of that same beer in the previous years. Your goal is to figure out the \textit{asymptotic behaviour} of the price of different beers.
+
+We denote the price of a beer the year it is introduced and the following years by $p(1),p(2),\ldots$, respectively. The price for any beer the first two years are $p(1)=1$ and $p(2)=2$. The CPC (Chief Price Consultant) of CPSBC then decides on a recursive formula (called a \textit{pricing scheme}).
+
+\paragraph{Task 1:} For the following pricing schemes, use the master method:
+\begin{enumerate}
+    \item $p(n) = 8p(n/2) + n^2$ vi er i case 1. $f(n) = n^2 = O(n^3-\epsilon)$ dvs. $\Theta(n) = n^3$
+    \item $p(n) = 8p(n/4) + n^3$ vi er i case 3  $f(n) = n^3 = \Omega(n^{\frac{3}{2} + \epsilon})$ og for $\frac{4}{8} \leq  c < 1$ gælder $8(\frac{n}{4})^3 \leq c*n^3$
+    \item $p(n) = 10p(n/9) + n\log_2 n$ vi er i case 3 $f(n) = nlogn = \Omega(n^{log_{9}10})$ dvs $T(n) = \Theta(n log n)$
+\end{enumerate}
+
+\paragraph{Task 2:} For the following pricing schemes, use the substitution method:
+\begin{enumerate}
+    \item $p(n) = p(n/2) + p(n/3) + n$ 
+    
+    Let's prove that $p(n) \leq cn^2$ for some constant $c > 0$.
+    
+    Substituting the inductive hypothesis:
+    \begin{align*}
+        p(n) &= p(n/2) + p(n/3) + n \\
+        &\leq c(n/2)^2 + c(n/3)^2 + n \\
+        &= cn^2/4 + cn^2/9 + n \\
+        &= cn^2(1/4 + 1/9) + n \\
+        &= cn^2(13/36) + n \\
+        &\leq cn^2
+    \end{align*}
+    
+    The last inequality holds when $cn^2(13/36) + n \leq cn^2$, or equivalently:
+    $n \leq cn^2(23/36)$
+    
+    This is true for $n \geq \frac{36}{23c}$ and sufficiently large $c$.
+    
+    Therefore, $p(n) = O(n^2)$.
+    \item $p(n) = \sqrt{n}\cdot p(\sqrt{n}) + \sqrt{n}$
+    
+    Let's prove that $p(n) \leq cn - d\sqrt{n}$ for some constants $c,d > 0$.
+    
+    Substituting:
+    \begin{align*}
+        p(n) &= \sqrt{n}\cdot p(\sqrt{n}) + \sqrt{n} \\
+        &\leq \sqrt{n}\cdot (c\sqrt{n} - d\sqrt{\sqrt{n}}) + \sqrt{n} \\
+        &= cn - d\sqrt{n}\sqrt{\sqrt{n}} + \sqrt{n} \\
+        &= cn - d n^{1/4} + \sqrt{n} \\
+        &\leq cn - d\sqrt{n}
+    \end{align*}
+    
+    The last inequality holds when $-d n^{1/4} + \sqrt{n} \leq -d\sqrt{n}$, or:
+    $\sqrt{n} \leq d({\sqrt{n}} - n^{1/4})$
+    
+    This is true for sufficiently large $n$ and $d$ since $\sqrt{n}$ grows faster than $n^{1/4}$.
+    
+    Therefore, $p(n) = O(n)$, and this is a tight bound as can be verified by expanding the recurrence.
+\end{enumerate}
+
+\subsubsection{1.2 Sorting}
+The CPS Brewing Company is also very interested in sorting their $n$ beers. The CEO has heard that quicksort performs extremely well in practice, but does not like that the worst-case running time is $\Theta(n^2)$. He has heard that there is an $O(n \log n)$ alternative called introspective sort (or introsort).
+
+\paragraph{Task 3:} Write pseudo-code for introsort. You may use functions from the book such as HeapSort, InsertionSort, and Randomized-Partition.
+
+\begin{algorithm}
+\caption{Introsort}
+\begin{algorithmic}[1]
+\Function{Introsort}{$A, i, j, maxdepth$}
+    \If{$j-i \leq c$}  \Comment{$c$ is a small constant (e.g., 16)}
+        \State \Call{InsertionSort}{$A, i, j$}
+    \ElsIf{$maxdepth = 0$}
+        \State \Call{HeapSort}{$A, i, j$}
+    \Else
+        \State $q \gets$ \Call{Randomized-Partition}{$A, i, j$}
+        \State \Call{Introsort}{$A, i, q-1, maxdepth-1$}
+        \State \Call{Introsort}{$A, q+1, j, maxdepth-1$}
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Task 4:} Show that the running time of introsort is worst-case $O(n \log n)$.
+
+The worst-case running time is $O(n \log n)$ because:
+\begin{itemize}
+    \item If the recursion depth reaches $2\log n$, we switch to HeapSort which is $O(n \log n)$
+    \item For smaller subarrays ($\leq c$), we use InsertionSort which is $O(n)$ on small inputs
+    \item The partitioning takes $O(n)$ time at each level
+    \item The maximum recursion depth is $O(\log n)$
+\end{itemize}
+
+\paragraph{Task 5:} Discuss why we use heap sort rather than another $O(n \log n)$ sorting algorithm such as merge sort.
+
+Heap sort is chosen over merge sort because:
+\begin{itemize}
+    \item Heap sort is in-place, requiring only $O(1)$ extra space
+    \item Merge sort requires $O(n)$ extra space
+    \item When switching from quicksort, we want to maintain the in-place property
+    \item Heap sort has good cache performance compared to merge sort
+\end{itemize}
+
+\paragraph{Task 6:} Why is it a good idea to run insertion sort on nearly sorted data, when we know its worst-case running time is $\Theta(n^2)$?
+
+Insertion sort is ideal for nearly sorted data because:
+\begin{itemize}
+    \item It has $O(n)$ running time on nearly sorted arrays
+    \item It has very low overhead compared to other sorting algorithms
+    \item It works in-place
+    \item It has excellent cache performance on small arrays
+    \item The small subarrays in introsort are likely to be nearly sorted due to the previous quicksort partitioning
+\end{itemize}
+
+// ... existing code ...
+
+\subsection{Opgave 1, 2 og 3 fra AD-April-2024}
+
+\subsection{1. Sortering (4\%)}
+Betragt en variant af MERGE-SORT der deler input op i tre dele, der er lige store (op til afrunding), sorterer hver del rekursivt, og derefter fletter de tre dele sammen med to kald til MERGE (CLRS sektion 2.3). Pseudokoden ser således ud:
+
+\begin{algorithm}
+\caption{MERGE3-SORT}
+\begin{algorithmic}[1]
+\State \textbf{if} $p < s$
+\State \quad $q = \lfloor(2 \cdot p + s)/3\rfloor$
+\State \quad $r = \lfloor(p + 2 \cdot s)/3\rfloor$
+\State \quad MERGE3-SORT$(A,p,q)$
+\State \quad MERGE3-SORT$(A,q+1,r)$
+\State \quad MERGE3-SORT$(A,r+1,s)$
+\State \quad MERGE$(A,p,q,r)$
+\State \quad MERGE$(A,p,r,s)$
+\end{algorithmic}
+\end{algorithm}
+
+Hvilken rekursionsligning beskriver køretiden $T(n)$ af MERGE3-SORT på et input af størrelse $n$ (hvor $n = s - p + 1$)? Der er præcis ét korrekt svar, men det er tilladt at vælge flere svar hvis du er i tvivl.
+
+\begin{enumerate}
+    \item $T(n) = T(n/2) + \Theta(n)$
+    \item $T(n) = T(2n/3) + \Theta(n)$
+    \item $T(n) = 2 \cdot T(n/3) + \Theta(n)$
+    \item $T(n) = 2 \cdot T(2n/3) + \Theta(n)$
+    \item $T(n) = 3 \cdot T(n/2) + \Theta(n)$
+    \item $T(n) = 3 \cdot T(n/3) + \Theta(n)$ korrekt
+\end{enumerate}
+
+\subsection{2. Rekursionsligninger (4\%)}
+Hvilken af nedenstående rekursionsligninger, nummereret $i = 1,\ldots,6$, har en løsning $T_i$ hvor $T_i(n) = O(n^2)$? Antag at $T_i(n) = 1$ for $n \leq 1$. Vælg ét eller flere korrekte svar.
+
+\textbf{Eksempler.} Hvis $T_0(n) = \Theta(n)$ gælder også $T_0(n) = O(n^2)$. Hvis $T_0(n) = \Theta(2^n)$ gælder \textit{ikke} $T_0(n) = O(n^2)$.
+
+\begin{enumerate}
+    \item $T_1(n) = T_1(n/2) + \Theta(n^2)$ ja
+    \item $T_2(n) = 4 \cdot T_2(n/2) + \Theta(n^2)$ nej
+    \item $T_3(n) = 3 \cdot T_3(n/2) + \Theta(n)$  ja
+    \item $T_4(n) = T_4(n/3) + \Theta(n)$ ja
+    \item $T_5(n) = 2 \cdot T_5(n/3) + \Theta(n)$ ja
+    \item $T_6(n) = 2 \cdot T_6(n-2) + \Theta(n)$ ja
+\end{enumerate}
+
+\subsection{3. Nedre grænser for sortering (4\%)}
+MERGE-SORT og (deterministisk) QUICKSORT som beskrevet i CLRS sektion 2.3 og 7.1 er eksempler på sammenligningsbaserede sorteringsalgoritmer (eng., comparison sort algorithms). Hvilke konklusioner kan drages som følge af den nedre grænse for sortering, Theorem 8.1 i CLRS? (Du skal ikke tage stilling til om konklusionen er sand, blot om den er en logisk konsekvens af Theorem 8.1.)
+
+\begin{enumerate}
+    \item Der findes et input hvor QUICKSORT kører i tid $O(n \lg n)$ i værste fald
+    \item Der findes et input hvor MERGE-SORT kører i tid $O(n \lg n)$ i værste fald
+    \item Der findes et input hvor QUICKSORT kører i tid $\Omega(n \lg n)$ i værste fald, ja
+    \item Der findes et input hvor MERGE-SORT kører i tid $\Omega(n \lg n)$ i værste fald, ja
+    \item I gennemsnit over alle input kører MERGE-SORT i tid $\Omega(n \lg n)$ ja
+    \item I gennemsnit over alle input kører QUICKSORT i tid $O(n \lg n)$
+\end{enumerate}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
+\end{document}
+
