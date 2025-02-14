@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage[round]{natbib}
+\usepackage{hyperref}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{parskip} % Add this to remove paragraph indentation
+\usetikzlibrary{shapes,arrows,positioning,fit}
+\usepackage{listings}
+\usepackage{amsthm}  % Add this package for theorem-like environments
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{subcaption}  % For subfigures
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\bibliographystyle{plain}
+
+% Define theorem-like environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+
+\begin{document}
+
+\section{Amortiseret analyse}
+
+I denne opgave betragter vi potentialfunktionen der bruges til at analysere en binær tæller i CLRS sektion 16.3. Lad $\Phi(D_i)$ betegne potentialfunktionens værdi efter $i$ INCREMENT operationer.
+
+\subsection*{a)} Hvilke af nedenstående egenskaber har $\Phi(D_i)$? (Læg mærke til at udsagnene ikke er uafhængige --- hvis der gælder $f(i) = \Omega(i)$ så gælder også $f(i) = \Omega(\lg i)$, osv.) Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
+
+\begin{enumerate}
+    \item $\Phi(D_i) = \Omega(\lg i)$.
+    \item $\Phi(D_i) = \Omega(i)$.
+    \item $\Phi(D_i) = O(1)$.
+    \item $\Phi(D_i) = O(\lg i)$.
+    \item $\Phi(D_i) = O(i)$.
+\end{enumerate}
+
+Betragt nu situationen hvor vi gerne vil analysere en tæller i det almindelige base-10 talsystem. Tælleren skal repræsentere heltal med op til $k$ decimaler, startende med $00\ldots0$ (dvs. $k$ nuller) og understøtte en INCREMENT operation der øger tællerens værdi med 1 (op til den maksimale værdi $10^k - 1$). Lad $x_i$ betegne værdien af tælleren efter $i$ operationer (dvs. vi har $x_i = i$).
+
+\subsection*{b)} Definér en potentialfunktion $\Phi(x_i)$ og brug den til at vise, at base-10 tælleren understøtter INCREMENT i amortiseret tid $O(1)$.
+
+Antag nu at vi gerne også vil understøtte en DECREMENT operation der reducerer tællerens værdi med 1 (ned til den minimale værdi 0).
+
+\subsection*{c)} Argumentér for at base-10 tælleren understøtter DECREMENT i amortiseret tid $O(k)$.
+
+\subsection*{d)} Giv et eksempel på en sekvens af operationer som viser at det \textit{ikke} er muligt at give en konstant (uafhængig af $k$) grænse på den amortiserede omkostning for både INCREMENT og DECREMENT.
+
+\section{Fibonacci hobe}
+
+Betragt en Fibonacci hob $H$ (eng. \textit{Fibonacci heap}), som beskrevet i CLRS digitalt kapitel 19, hvorpå der udføres $n_1$ INSERT operationer, $n_2$ EXTRACT-MIN operationer, og $n_3$ DECREASE-KEY operationer. Det totale antal operationer er $n = n_1 + n_2 + n_3$. Hvilke af følgende udsagn er altid sande? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
+
+\begin{enumerate}
+    \item Den samlede worst case tid for operationerne er $\Omega(n\lg n)$.
+    \item Den samlede worst case tid for operationerne er $O(n\lg n)$.
+    \item Den samlede worst case tid for operationerne er $O(n_1 + n_3 + n_2\lg n)$.
+    \item $H$ har $n_1 - n_2 - n_3$ knuder.
+    \item $H$ har $m(H) = n_1 - n_2$ markerede knuder.
+\end{enumerate}
+
+\section{Korrekthedsargumenter}
+
+Betragt følgende problem, kaldet MaxProduct:
+
+Givet: En liste af tal $x_1,\ldots,x_n \in \mathbb{R}$ (kan være både positive og negative), find en delmængde $I^* \subseteq \{1,\ldots,n\}$ hvor produktet $\prod_{i\in I^*} x_i$ er så stort som muligt, dvs. for alle mængder $I \subseteq \{1,\ldots,n\}$ skal gælde at $\prod_{i\in I} x_i \leq \prod_{i\in I^*} x_i$.
+
+\textbf{Eksempel.} På input $x_1 = -4$, $x_2 = -0.5$, $x_3 = 0.5$, $x_4 = 0.5$, $x_5 = 1.5$, $x_6 = 6$ kan vi vælge $I = \{5,6\}$ og få et produkt på $1.5 \cdot 6 = 9$, men et bedre valg er $I = \{1,2,5,6\}$ som giver produktet $(-4) \cdot (-0.5) \cdot 1.5 \cdot 6 = 18$. Den tomme mængde $I = \emptyset$ giver per definition $\prod_{i\in\emptyset} x_i = 1$.
+
+Hvad gælder altid for en optimal løsning $I^*$? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
+
+\begin{enumerate}
+    \item $I^*$ indeholder \textit{ikke} noget indeks $i$ hvor $x_i$ er mellem 0 og 1 ($x_i \in (0,1)$).
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i < 0$.
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i > 1$.
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $|x_i| > 1$ (i.e., absolutværdien af $x_i$ er større end 1).
+\end{enumerate}
+
+\section{Induktionsbeviser}
+
+I denne opgave antager vi at $T$ er en sorteret tabel med $n > 1$ elementer således at for $i < j$ gælder $T[i] \leq T[j]$. Antag at $1 \leq p \leq r \leq n$, hvor $p$, $r$, $n$ er heltal. Betragt følgende funktion, i pseudo-kode notationen fra CLRS:
+
+\begin{algorithmic}[1]
+\Function{WhileMystery}{$x,T,p,r$}
+    \State $low = p$
+    \State $high = \max(p,r+1)$
+    \While{$low < high$}
+        \State $mid = \lfloor(low + high)/2\rfloor$
+        \If{$x \leq T[mid]$}
+            \State $high = mid$
+        \Else
+            \State $low = mid + 1$
+        \EndIf
+    \EndWhile
+    \State \Return $high$
+\EndFunction
+\end{algorithmic}
+
+\subsection*{a)} Lad $high_i$ og $low_i$ betegne værdien af variablene $high$ og $low$ efter $i$ iterationer af while løkken. Bevis ved induktion at $high_i - low_i \leq n/2^i$. (Du skal bruge antagelsen $1 \leq p \leq r \leq n$.) Der lægges vægt på, at argumentationen er klar og koncis.
+
+\begin{enumerate}
+    \item basecase:
+    lad i = 0.
+    da $1 \leq p \leq r \leq n$
+    $high_{i=0} = r+1, low_{i=0} = p$ 
+    $high_{i=0} - low_{i=0} = r+1 - p \leq r \leq n = \frac{n}{2^0}$ da $1 \leq p \leq r \leq n$
+    \item 
+    vi har induktionshypotesen: $high_n - low_n \leq n/2^n$ og undersøger $n+1$
+
+    der er to cases
+    \begin{enumerate}
+        \item $x \leq T[mid_{n}]$
+        \begin{align*}
+            high_{i=n+1} &= mid_{n}, \quad low_{i=n+1}=low_{i=n} \\
+            high_{i=n+1} - low_{i=n+1} &= mid_{n} - low_{i=n} \\
+            &= \left\lfloor\frac{low_{i=n} + high_{i=n}}{2}\right\rfloor - low_{i=n} \\
+            &\leq \frac{high_{i=n} - low_{i=n}}{2} \\
+            &\leq \frac{n}{2^{n+1}} \quad \text{(ved induktionshypotesen)}
+        \end{align*}
+
+        \item $x > T[mid_{n}]$
+        \begin{align*}
+            high_{i=n+1} &= high_{i=n}, \quad low_{i=n+1}=mid_{n}+1 \\
+            high_{i=n+1} - low_{i=n+1} &= high_{i=n} - (mid_{n}+1) \\
+            &= high_{i=n} - \left(\left\lfloor\frac{low_{i=n} + high_{i=n}}{2}\right\rfloor+1\right) \\
+            &\leq high_{i=n} - \frac{low_{i=n} + high_{i=n}}{2} \\
+            &= \frac{high_{i=n} - low_{i=n}}{2} \\
+            &\leq \frac{n}{2^{n+1}} \quad \text{(ved induktionshypotesen)}
+        \end{align*}
+    \end{enumerate}
+
+    I begge tilfælde har vi vist at $high_{i=n+1} - low_{i=n+1} \leq n/2^{n+1}$, hvilket fuldfører induktionsbeviset.
+\end{enumerate}
+
+
+\end{document}
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
