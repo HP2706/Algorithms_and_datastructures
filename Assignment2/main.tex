@@ -35,33 +35,81 @@ I denne opgave betragter vi potentialfunktionen der bruges til at analysere en b
 \subsection*{a)} Hvilke af nedenstående egenskaber har $\Phi(D_i)$? (Læg mærke til at udsagnene ikke er uafhængige --- hvis der gælder $f(i) = \Omega(i)$ så gælder også $f(i) = \Omega(\lg i)$, osv.) Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
 \begin{enumerate}
-    \item $\Phi(D_i) = \Omega(\lg i)$.
-    \item $\Phi(D_i) = \Omega(i)$.
-    \item $\Phi(D_i) = O(1)$.
-    \item $\Phi(D_i) = O(\lg i)$.
-    \item $\Phi(D_i) = O(i)$.
+    \item $\Phi(D_i) = \Omega(\lg i)$ \textbf{false}, da for tal af formen $2^k$ har vi $\Phi(D_i) = 1$ mens $\lg i = k$.
+    \item $\Phi(D_i) = \Omega(i)$ \textbf{falsk}, da antallet af 1'ere ikke kan være lineært i tallet selv.
+    \item $\Phi(D_i) = O(1)$ \textbf{falsk}, da tal som $2^k - 1$ har k 1'ere i deres binære repræsentation.
+    \item $\Phi(D_i) = O(\lg i)$ \textbf{sandt}, da et tal i har højst $\lfloor \lg i \rfloor + 1$ bits totalt.
+    \item $\Phi(D_i) = O(i)$ \textbf{sandt}, da $\Phi(D_i) = O(\lg i)$ og $\lg i = O(i)$.
 \end{enumerate}
 
 Betragt nu situationen hvor vi gerne vil analysere en tæller i det almindelige base-10 talsystem. Tælleren skal repræsentere heltal med op til $k$ decimaler, startende med $00\ldots0$ (dvs. $k$ nuller) og understøtte en INCREMENT operation der øger tællerens værdi med 1 (op til den maksimale værdi $10^k - 1$). Lad $x_i$ betegne værdien af tælleren efter $i$ operationer (dvs. vi har $x_i = i$).
 
 \subsection*{b)} Definér en potentialfunktion $\Phi(x_i)$ og brug den til at vise, at base-10 tælleren understøtter INCREMENT i amortiseret tid $O(1)$.
 
+Lad $\Phi(x_i)$ være antallet af 9'ere i den decimale repræsentation af $x_i$.
+
+Den faktiske kostpris for INCREMENT er proportional med antallet af cifre der ændres:
+\begin{itemize}
+    \item Hvis tallet ikke ender på 9, koster det 1 operation
+    \item Hvis tallet ender på $k$ 9'ere, koster det $k+1$ operationer (vi skal ændre alle 9'ere til 0 og inkrementere det næste ciffer)
+\end{itemize}
+
+Lad $c_i$ være den faktiske kostpris for operation $i$. Den amortiserede kostpris $a_i$ er:
+\[ \hat{c_i} = c_i + \Phi(x_i) - \Phi(x_{i-1}) \]
+
+For en INCREMENT operation:
+\begin{itemize}
+    \item Hvis tallet ikke ender på 9: $c_i = 1$ og $\Phi(x_i) = \Phi(x_{i-1})$, så $\hat{c_i} = 1$
+    \item Hvis tallet ender på $k$ 9'ere: $c_i = k+1$, men $\Phi(x_i) = \Phi(x_{i-1}) - k$, så $\hat{c_i} = (k+1) + (-k) = 1$
+\end{itemize}
+
+Derfor er den amortiserede kostpris altid 1, hvilket viser at INCREMENT operationen er $O(1)$ amortiseret.
+
 Antag nu at vi gerne også vil understøtte en DECREMENT operation der reducerer tællerens værdi med 1 (ned til den minimale værdi 0).
 
 \subsection*{c)} Argumentér for at base-10 tælleren understøtter DECREMENT i amortiseret tid $O(k)$.
 
+Den faktiske kostpris for DECREMENT er proportional med antallet af cifre der ændres:
+\begin{itemize}
+    \item Hvis det sidste ciffer > 0, koster det 1 operation
+    \item Hvis tallet ender på $k$ 0'ere, koster det $k+1$ operationer (vi skal ændre alle 0'ere til 9'ere og dekrementere det næste ciffer)
+\end{itemize}
+
+For en DECREMENT operation:
+\begin{itemize}
+    \item Hvis det sidste ciffer > 0: $c_i = 1$ og $\Phi(x_i) - \Phi(x_{i-1}) \leq k$ (da vi højst kan tilføje k nye 9'ere), så $\hat{c_i} \leq k+1$
+    \item Hvis tallet ender på $k$ 0'ere: $c_i = k+1$, $\Phi(x_i) = k$ (k nye 9'ere), og $\Phi(x_{i-1}) = 0$ (ingen 9'ere), så $\hat{c_i} = (k+1) + k = 2k+1$
+\end{itemize}
+
+I begge tilfælde er den amortiserede kostpris $O(k)$.
+
 \subsection*{d)} Giv et eksempel på en sekvens af operationer som viser at det \textit{ikke} er muligt at give en konstant (uafhængig af $k$) grænse på den amortiserede omkostning for både INCREMENT og DECREMENT.
+
+\textbf{TODO}
 
 \section{Fibonacci hobe}
 
 Betragt en Fibonacci hob $H$ (eng. \textit{Fibonacci heap}), som beskrevet i CLRS digitalt kapitel 19, hvorpå der udføres $n_1$ INSERT operationer, $n_2$ EXTRACT-MIN operationer, og $n_3$ DECREASE-KEY operationer. Det totale antal operationer er $n = n_1 + n_2 + n_3$. Hvilke af følgende udsagn er altid sande? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
+vi ved følgende
+$runtime = O(n_1 + n_2\log n + n_3)$
+
 \begin{enumerate}
-    \item Den samlede worst case tid for operationerne er $\Omega(n\lg n)$.
+    \item INSERT : amortized $\Theta(1)$
+    \item EXTRACT-MIN : amortized $O(log n)$
+    \item DECREASE-KEY : amortized $\Theta(1)$
+\end{enumerate}
+
+vi ved nu følgende
+
+\begin{enumerate}
+    \item Den samlede worst case tid for operationerne er $\Omega(n\lg n)$. \textbf{forkert} da $\Omega(n\lg n)$ er asymptotisk størrere end $O(n_1 + n_2\log n + n_3)$, hvilket giver modstrid.
     \item Den samlede worst case tid for operationerne er $O(n\lg n)$.
-    \item Den samlede worst case tid for operationerne er $O(n_1 + n_3 + n_2\lg n)$.
-    \item $H$ har $n_1 - n_2 - n_3$ knuder.
-    \item $H$ har $m(H) = n_1 - n_2$ markerede knuder.
+    \textbf{sandt} da $n_1 + n_2\log n + n_3 = O(n\lg n)$
+
+    \item Den samlede worst case tid for operationerne er $O(n_1 + n_3 + n_2\lg n)$. \textbf{sandt}, vi viste dette tidligere(\textbf{NOTE: vi antager amortiseret O er samme som O, hvilket måske er forkert}). 
+    \item $H$ har $n_1 - n_2 - n_3$ knuder. \textbf{forkert} da DECREASE-KEY operationer ændrer kun værdier, de tilføjer eller fjerner ikke knuder.
+    \item $H$ har $m(H) = n_1 - n_2$ markerede knuder. \textbf{forkert}. Antallet af markerede knuder m(H) kan ikke udtrykkes så simpelt
 \end{enumerate}
 
 \section{Korrekthedsargumenter}
@@ -75,10 +123,17 @@ Givet: En liste af tal $x_1,\ldots,x_n \in \mathbb{R}$ (kan være både positive
 Hvad gælder altid for en optimal løsning $I^*$? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
 \begin{enumerate}
-    \item $I^*$ indeholder \textit{ikke} noget indeks $i$ hvor $x_i$ er mellem 0 og 1 ($x_i \in (0,1)$).
-    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i < 0$.
-    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i > 1$.
-    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $|x_i| > 1$ (i.e., absolutværdien af $x_i$ er større end 1).
+    \item $I^*$ indeholder \textit{ikke} noget indeks $i$ hvor $x_i$ er mellem 0 og 1 ($x_i \in (0,1)$). 
+    \textbf{Sandt}, da for alle $x_i \in (0,1)$ og $A \in \mathbb{R}_+$ gælder $A \cdot x_i < A$
+    
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i < 0$. 
+    \textbf{Falsk}, dette gælder kun når $I_- (mod 2) = 0$  og $\prod_{i \in I_-} x_i \geq 1$, hvor $I_-$ er mængden af negative indekser
+    
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $x_i > 1$. 
+    \textbf{Sandt} da $\forall x_i \in I: x_i > 1 \prod_{x_i \cap I} x_j < \prod_{x_j \in I}$
+    
+    \item $I^*$ indeholder \textit{alle} indekser $i$ hvor $|x_i| > 1$. 
+    \textbf{Falsk}, dette gælder kun når antallet af negative indekser er lige
 \end{enumerate}
 
 \section{Induktionsbeviser}
