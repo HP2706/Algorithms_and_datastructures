@@ -522,7 +522,7 @@ Hvilke af følgende udsagn gælder altid om $B$, der returneres af MinAlgoritme$
 \begin{enumerate}
     \item Sekvensen $B[1],\ldots,B[n]$ er ikke-aftagende. forkert(hvis vi tæller 0 med)
     \item Sekvensen $B[1],\ldots,B[n]$ er ikke-voksende. korrekt
-    \item $B$ indeholder en delmængde af tallene fra $A$. korrekt
+    \item $B$ indeholder en delmængde tallene fra $A$. korrekt
     \item $B$ indeholder det største tal fra $A$. forket
     \item For hvert $i \in \{1,\ldots,n\}$ gælder $B[i] = \min_{1\leq j\leq i} A[j]$. korrekt
     \item For hvert $i \in \{1,\ldots,n\}$ gælder $B[i] = \min_{i\leq j\leq n} A[j]$. forkert
@@ -776,6 +776,214 @@ MERGE-SORT og (deterministisk) QUICKSORT som beskrevet i CLRS sektion 2.3 og 7.1
     \item I gennemsnit over alle input kører MERGE-SORT i tid $\Omega(n \lg n)$ ja
     \item I gennemsnit over alle input kører QUICKSORT i tid $O(n \lg n)$
 \end{enumerate}
+
+
+\section{Exercises 17/2}
+
+\begin{enumerate}
+    \item CLRS 26.1-2: Suppose that line 4 of P-FIB(n) rather than calling it is done in parallel with line 5. What would the impact on the asymptotic work, span, and parallelism be?
+    
+   as per the current implementation we end up asymptotically doing the same work as for every recursive call, one is done in parallel and one is done sequentially as thus we are bound by the sequential call.
+
+   with both recursive calls being parallel we do the same work + overhead but with logical depth of $\Theta(log n)$
+
+
+    \item CLRS 26.1-4: Prove that $T_P \geq \frac{T_1}{P} + T_{\infty}$.
+    
+    \begin{proof}
+    Let's prove this inequality in two steps:
+    
+    1) From the work law, we know that $T_P \geq \frac{T_1}{P}$
+    
+    2) From the span law, we know that $T_P \geq T_{\infty}$
+    
+    Therefore, for any execution time $T_P$, it must be at least as large as both $\frac{T_1}{P}$ and $T_{\infty}$.
+    
+    Furthermore, since these lower bounds come from different constraints (total work vs critical path length), 
+    the actual execution time must be at least as large as the sum of these bounds.
+    
+    If this weren't true, consider a schedule that took less time than $\frac{T_1}{P} + T_{\infty}$. 
+    This schedule would either:
+    \begin{itemize}
+        \item Complete more work per time step than the P processors are capable of (violating the work law), or
+        \item Complete the critical path faster than sequential dependencies allow (violating the span law)
+    \end{itemize}
+    
+    Since neither of these is possible, we must have:
+    $T_P \geq \frac{T_1}{P} + T_{\infty}$
+    \end{proof}
+    
+    \item CLRS 26.1-6: Professor Karan measures her deterministic task-parallel algorithm on 4, 10, and 64 processors of an ideal parallel computer using a greedy scheduler. She claims that the three runs yielded $T_4 = 80$ seconds, $T_{10} = 42$ seconds, and $T_{64} = 10$ seconds. Argue that the professor is either lying or incompetent. (Hint: Use the work law (26.2), the span law (26.3), and inequality (26.5) from Exercise 26.1-4.)
+    
+    Let's prove this using the laws mentioned:
+    
+    \begin{enumerate}
+        \item From the work law, we know that $T_1 \leq P \cdot T_P$ for any number of processors $P$
+        \item Using $P=4$: $T_1 \leq 4 \cdot 80 = 320$ seconds
+        \item Using $P=10$: $T_1 \leq 10 \cdot 42 = 420$ seconds
+        \item Using $P=64$: $T_1 \leq 64 \cdot 10 = 640$ seconds
+    \end{enumerate}
+    
+    Since $T_1$ is a constant (the sequential runtime), these inequalities must all be consistent. However, from the span law, we know that $T_{\infty} \leq T_P$ for any $P$. Therefore:
+    
+    \begin{enumerate}
+        \item $T_{\infty} \leq T_{64} = 10$ seconds
+        \item From Exercise 26.1-4, we know that $T_P \geq \frac{T_1}{P} + T_{\infty}$
+        \item For $P=4$: $80 \geq \frac{320}{4} + 10 = 90$
+    \end{enumerate}
+    
+    This is a contradiction! The measured time $T_4 = 80$ cannot satisfy both the work law and the span law with $T_{\infty} \leq 10$. Therefore, Professor Karan's measurements must be incorrect.
+    
+    \item CLRS 26.1-7: Give a parallel algorithm to multiply an $n \times n$ matrix by an $n$-vector that achieves $\Theta(n^2/\lg n)$ parallelism while maintaining $\Theta(n^2)$ work.
+    
+    A parallel algorithm that achieves $\Theta(n^2/\lg n)$ parallelism:
+
+    1. For each output element $i$ in parallel:
+       - Compute all $n$ products $A[i,j] \cdot x[j]$ in parallel
+       - Use parallel reduction to sum the $n$ products in $\Theta(\lg n)$ time
+
+    This gives:
+    - Work: $\Theta(n^2)$ ($n$ outputs $\times$ $n$ operations each)
+    - Span: $\Theta(\lg n)$ (dominated by the parallel reduction step)
+    - Parallelism: $\Theta(n^2)/\Theta(\lg n) = \Theta(n^2/\lg n)$
+
+    \item CLRS 26.1-10: For what number of processors do the two versions of the chess program run equally fast, assuming that $T_P = T_1/P + T_{\infty}$?
+    
+    \item CLRS 26.2-3 give pseudocode for a parallel algortihm that multiplies two n x n matrices with work $\Theta(n^3)$ but span $\Theta(lg n), explain your algorithm$
+    
+    we use the solution of 26.1-7 as a subroutine but extend parallelism to be over the n vectors of dim n in parallel. 
+
+\end{enumerate}
+
+
+
+\section{Exercises 19/2}
+
+\begin{enumerate}
+    \item[16.1-1] If the set of stack operations included a MULTIPUSH operation(additional to Push, Pop, MultiPop), which pushes $k$ elements onto the stack, would the $O(1)$ bound on the amortized cost of stack operations continue to hold?
+    
+    No, as MultiPush is not similarly restricted as Pop and multipop to be less than or equal to the number of push iteration. So now in the worst case we have n sequences of multipush, each multipush being O(n) for a total of $O(n^2)$
+
+    \item[16.1-3] Suppose we perform a sequence of $n$ operations on a data structure in which the $i$th operation costs $i$ if $i$ is an exact power of 2, and 1 otherwise. Use aggregate analysis to determine the amortized cost per operation.
+    
+    Let's analyze the total cost for $n$ operations:
+
+    1) Operations at powers of 2 cost $i$: at positions 1, 2, 4, 8, ..., $2^{\lfloor \log_2 n \rfloor}$
+    2) All other operations cost 1
+
+    Total cost = $\sum_{i=0}^{\lfloor \log_2 n \rfloor} 2^i + (n - (\lfloor \log_2 n \rfloor + 1))$
+
+    Using the formula for geometric series:
+    $= (2^{\lfloor \log_2 n \rfloor + 1} - 1) + (n - \lfloor \log_2 n \rfloor - 1)$
+    $= 2^{\lfloor \log_2 n \rfloor + 1} + n - \lfloor \log_2 n \rfloor - 2$
+    $\leq 2n + n - \log_2 n - 2$
+    $= 3n - \log_2 n - 2$
+
+    Therefore, the amortized cost per operation is:
+    $\frac{3n - \log_2 n - 2}{n} = O(1)$
+
+    \item[16.2-2] Redo Exercise 16.1-3 using a potential method of analysis.
+
+    Let's solve this using the potential method. We need to find a potential function $\Phi(Di)$ where Di represents the data structure after i operations.
+
+    Let's define our potential function as:
+    \[ \Phi(D_i) = 2\lfloor \log_2 i \rfloor - \log_2 i \]
+
+    For the ith operation:
+    \begin{itemize}
+        \item If i is a power of 2 (i.e., i = 2k for some k):
+            \begin{align*}
+                c_i &= i \\
+                \Phi(D_i) - \Phi(D_{i-1}) &= (2k - k) - (2(k-1) - (k-1)) \\
+                &= k - (k-1) = 1
+            \end{align*}
+            Therefore, amortized cost = actual cost + potential change
+            \[ \hat{c_i} = i + 1 \]
+
+        \item If i is not a power of 2:
+            \begin{align*}
+                c_i &= 1 \\
+                \Phi(D_i) - \Phi(D_{i-1}) &\leq 0
+            \end{align*}
+            Therefore,
+            \[ \hat{c_i} \leq 1 \]
+    \end{itemize}
+
+    Since $\Phi(D_0) = 0$ and $\Phi(D_n) \geq 0$, and we've shown that the amortized cost of each operation is O(1), the amortized cost per operation is O(1).
+    
+    \item[16.3-3] Consider an ordinary binary min-heap data structure with the usual instructions INSERT and EXTRACT-MIN that operates on a heap of size n. Give a potential function $\Theta$ such that the amortized cost of INSERT is O(1) and the amortized cost of EXTRACT-MIN is O(lg n).
+    
+    Let's define the potential function as: $\Phi(D_n) = 2n\lg n$, where n is the current size of the heap.
+
+    Analysis:
+    \begin{itemize}
+        \item For INSERT:
+            \begin{itemize}
+                \item Actual cost: $O(\lg n)$ for bubble-up
+                \item Potential change: $2(n+1)\lg(n+1) - 2n\lg n = O(\lg n)$
+                \item Amortized cost = actual - potential change = $O(\lg n) - O(\lg n) = O(1)$
+            \end{itemize}
+        \item For EXTRACT-MIN:
+            \begin{itemize}
+                \item Actual cost: $O(\lg n)$ for bubble-down
+                \item Potential change: $2(n-1)\lg(n-1) - 2n\lg n = -O(\lg n)$
+                \item Amortized cost = actual - potential change = $O(\lg n) + O(\lg n) = O(\lg n)$
+            \end{itemize}
+    \end{itemize}
+
+    This potential function works because:
+    1. It's always non-negative (required for potential functions)
+    2. The potential decreases during INSERT to offset its actual cost
+    3. The potential increases during EXTRACT-MIN, maintaining its logarithmic cost
+
+    \item[16.3-4] Show that for any comparison-based implementation of a binary min-heap data structure, the amortized cost of EXTRACT-MIN must be $\Omega(\lg n)$, where $n$ is the heap size. Use a potential function argument.
+    
+    TODO
+    
+    \item[16.3-2] Red-black trees are an implementation of dynamic search trees where the amortized cost of all operations is O(lg n). Show that in any sequence of operations on a red-black tree, the actual cost of any operation is O(n).
+    
+    first of all, we consider the following operations
+    1. insert
+    2. delete
+    
+    \item[16.4-4] Suppose that instead of contracting the table by halving its size when its load factor drops below 1/4, we contract it by multiplying its size by 2/3 when its load factor drops below 1/3. Using the potential method, show that the amortized cost of a TABLE-DELETE that uses this new rule is bounded above by a constant.
+    
+    \item Opgave 8: juni 2024 AD exam
+    Vi betragter trærepræsentationer af disjunkte mængder (eng. disjoint sets), som beskrevet i CLRS sektion 19.3, ved brug af heuristikken union by rank. Antag at der laves $k_1$ MAKE-SET operationer, $k_2$ UNION operationer, og $k_3$ FIND-SET operationer. Hvilke af nedenstående udsagn om den totale køretid for disse operationer er korrekte for alle værdier af $k_1, k_2, k_3$? Vælg ét eller flere korrekte svar.
+
+    \begin{enumerate}
+        \item Tiden er $O(\log k_1 + \log k_2 + \log k_3)$
+        \item Tiden er $O(k_1 + \log k_2 + \log k_3)$
+        \item Tiden er $O(k_1 + k_2 + \log k_3)$
+        \item Tiden er $O(k_1 + k_2 + k_3)$
+        \item Tiden er $O((k_1 + k_2 + k_3) \log k_1)$
+        \item Tiden er $O((k_1 + k_2 + k_3) \log(k_1 + k_2 + k_3))$
+    \end{enumerate}
+    
+    
+    \item Opgave 6: april 2024 AD exam - Amortiseret analyse
+    
+    Betragt dynamiske tabeller (eng., dynamic tables) som beskrevet i CLRS sektion 16.4.2, altså versionen med en TABLE-DELETE operation. Vi betragter potentialfunktionen defineret i CLRS ligning (16.5), hvor $\alpha(T) = T.num/T.size$:
+
+    \[ \Phi(T) = \begin{cases}
+    2(T.num - T.size/2) & \text{hvis } \alpha(T) \geq 1/2, \\
+    T.size - T.num & \text{hvis } \alpha(T) < 1/2 .
+    \end{cases} \]
+
+    Hvilke af følgende udsagn er sande? Vælg ét eller flere korrekte svar.
+
+    \begin{enumerate}
+        \item En TABLE-INSERT operation øger altid værdien af $\Phi(T)$
+        \item En TABLE-DELETE operation øger altid værdien af $\Phi(T)$
+        \item En TABLE-INSERT operation mindsker altid værdien af $\Phi(T)$
+        \item En TABLE-DELETE operation mindsker altid værdien af $\Phi(T)$
+        \item Værdien af $\Phi(T)$ er altid større eller lig med nul
+        \item Værdien af $\Phi(T)$ er altid mindre end eller lig med $T.size$
+    \end{enumerate}
+
+\end{enumerate}
+
+
 
 \bibliographystyle{plainnat}
 \bibliography{references}
