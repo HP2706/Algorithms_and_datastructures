@@ -100,13 +100,43 @@ Dvs.
 
 I denne opgave betragter vi potentialfunktionen der bruges til at analysere dynamiske tabeller i CLRS sektion 16.4.1. Lad $\Phi_i$ betegne potentialfunktionens værdi efter $i$ Table-Insert operationer, uden nogen Table-Delete operationer. Hvilke egenskaber har $\Phi_i$? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
+i CLRS defineres potentiale funktionen således
+
+\[
+\Phi_i = 2(T_i.num - \frac{T_i.size}{2})
+\]
+
+hvor $T_i.num$ er antal elementer efter i'te insertion.
+
+\[T_i.num \in [\frac{T_i.size}{4}, T_i.size]\]
+
+Lad os analysere potentialfunktionen:
+
+\begin{itemize}
+\item Minimum for $\Phi_i$ opnås lige efter en fordobling, hvor $T_i.num = T_i.size/2$:\\
+$\Phi_i = 2(T_i.size/2 - T_i.size/2) = 0$
+
+\item Maksimum for $\Phi_i$ opnås når tabellen er fuld, hvor $T_i.num = T_i.size$:\\
+$\Phi_i = 2(T_i.size - T_i.size/2) = T_i.size$
+
+\item Når $T_i.num = T_i.size/4$ (minimum før størrelsen reduceres):\\
+$\Phi_i = 2(T_i.size/4 - T_i.size/2) = -T_i.size/2$
+\end{itemize}
+
+
+
 \begin{enumerate}
-\item $\Phi_i = \Omega(1)$.
-\item $\Phi_i = O(1)$.
-\item $\Phi_i = \Omega(i)$.
-\item $\Phi_i = O(i)$.
-\item $\Phi_i \geq \Phi_{i-1}$.
-\item $\Phi_i \geq 0$.
+\item $\Phi_i = \Omega(1)$. \textbf{Forkert.} $\Phi_i$ kan være 0.
+
+\item $\Phi_i = O(1)$. \textbf{Forkert.} $\Phi_i$ kan vokse ubegrænset med størrelsen af tabellen.
+
+\item $\Phi_i = \Omega(i)$. \textbf{Forkert.} $\Phi_i$ kan være 0 efter en fordobling, uanset hvor mange elementer der er indsat.
+
+\item $\Phi_i = O(i)$. \textbf{Korrekt.} Da $T_i.num \leq i$ (vi kan højst have indsat $i$ elementer) og $T_i.size \leq 4 \cdot T_i.num$ (i værste fald), får vi $\Phi_i \leq 2(i - i/2) = i$, så $\Phi_i = O(i)$.
+
+\item $\Phi_i \geq \Phi_{i-1}$. \textbf{Forkert.} Når tabellen fordobles, falder potentialet fra $T_i.size$ til 0.
+
+\item $\Phi_i \geq 0$. \textbf{Korrekt.} da $T_i.num \geq T_i.size/2$.
 \end{enumerate}
 
 \section{Rød-sorte søgetræer}
@@ -121,13 +151,17 @@ Betragt et rød-sort binært søgetræ $T$ (eng. red-black binary search tree), 
 
 Hvilke knuder er mulige på mindst én af positionerne markeret med ?, hvis træet skal overholde invarianterne for et rød-sort binært søgetræ? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
+kigger vi på på knuden med forældre 24. gælder følgende, vi ved den skal være sort da en rød knude har sorte børn. samtidigt skal den være et tal T 27 < T < 31. Hvilket betyder den må være sort 30.
+
+kigges der nu på knuden med forældre 56. Vi ved at alle stier har lige mange sorte, hvilket betyder at vi skal have en rød knude med en nøgle K > 56. den eneste mulighed er rød med nøgle 58.
+
 \begin{enumerate}
-\item En rød knude med nøglen 28.
-\item En rød knude med nøglen 44.
-\item En rød knude med nøglen 58.
-\item En sort knude med nøglen 25.
-\item En sort knude med nøglen 30.
-\item En sort knude med nøglen 66.
+\item En rød knude med nøglen 28. nej
+\item En rød knude med nøglen 44. nej
+\item En rød knude med nøglen 58. ja
+\item En sort knude med nøglen 25. nej
+\item En sort knude med nøglen 30. ja  
+\item En sort knude med nøglen 66. nej
 \end{enumerate}
 
 \section{Indsættelse i rød-sorte søgetræer}
@@ -142,11 +176,15 @@ Betragt dette rød-sorte binære søgetræ (eng. red-black binary search tree), 
 
 Antag at vi bruger indsættelsesalgoritmen RB-Insert fra CLRS kapitel 13 til at indsætte nøglen 9. Hvad sker med træet? Vælg præcis ét svar og beskriv hvordan du kom frem til det.
 
+RB insert løber gennem træet hvis nøglen er mindre end den nuværende knude tager vi den nedre venstre ellers tager vi den højre. Når vi når bunden af træet indsætter vi knuden og farver den rød. derefter kalder vi rb-insert-fixup, som sørger for at alle invarianter er opretholdt.
+
+i vores tilfælde vil vi altså indsætte knuden som højre barn til knude 8 og farve den rød. Da alle invarianter er opretholdt returnere rb-insert fixup uden at ændre i træet.
+
 \begin{enumerate}
-\item 9 indsættes som højre barn til knude 8 og farves rød.
-\item 9 indsættes som højre barn til knude 8 og farves sort.
-\item 9 indsættes som venstre barn til knude 12 og farves rød.
-\item 9 indsættes som venstre barn til knude 12 og farves sort.
+\item 9 indsættes som højre barn til knude 8 og farves rød. \texbf{korrekt}
+\item 9 indsættes som højre barn til knude 8 og farves sort. \texbf{forkert}
+\item 9 indsættes som venstre barn til knude 12 og farves rød.\texbf{forkert}
+\item 9 indsættes som venstre barn til knude 12 og farves sort.\texbf{forkert}
 \item Ingen af ovenstående.
 \end{enumerate}
 
@@ -154,13 +192,29 @@ Antag at vi bruger indsættelsesalgoritmen RB-Insert fra CLRS kapitel 13 til at 
 
 Betragt et rød-sort binært søgetræ $T$ (eng. red-black binary search tree), som beskrevet i CLRS kapitel 13, hvorpå der (startende med et tomt træ) udføres $n_1$ Insert operationer, $n_2$ Delete operationer, og $n_3$ Search operationer (sidstnævnte kaldes også "access" operationer). Det totale antal operationer er $N = n_1 + n_2 + n_3$. Hvilke af følgende udsagn er altid sande? Vælg ét eller flere korrekte svar og beskriv hvordan du kom frem til dem (både positive og negative svar).
 
+vi ved følgende
+
+\[
+\text{RB-insert} = O(log n)
+\]
+
+\[
+\text{RB-delete} = O(log n)
+\]
+
+\[
+\text{access} = O(log n)
+\]
+
+Dette giver os $N = log n_1 + log n_2 + log n_3 = O(log N) $
+
 \begin{enumerate}
-\item Den samlede tid for operationerne er $\Omega(N)$.
-\item Den samlede tid for operationerne er $O(N \lg N)$.
-\item Den samlede tid for operationerne er $O(n_3 + (n_1 + n_2) \lg N)$.
-\item Dybden af $T$ er højst $2 \lg(n_1 + 1)$.
-\item Alle blade i $T$ er i dybde mindst $\lfloor\lg(n_3 + 1)\rfloor$.
-\item Alle sorte knuder i $T$ har en afstand til roden, der er et lige tal.
+\item Den samlede tid for operationerne er $\Omega(N)$. \textbf{forkert} da $N=O(log n)$
+\item Den samlede tid for operationerne er $O(N \lg N)$. \textbf{sandt} da $N=O(log n)= O(N \lg N)$
+\item Den samlede tid for operationerne er $O(n_3 + (n_1 + n_2) \lg N)$. \textbf{sandt} da $N=O(log N)=O(n_3 + (n_1 + n_2) \lg N)$ da udtrykket altid er større end $O(log N)$
+\item Dybden af $T$ er højst $2 \lg(n_1 + 1)$.  \textbf{Sandt} da vi højest har $n_1$ knuder og den maksimale dybde for et træ med $n_1$ knuder er $2 \lg(n_1 + 1)$
+\item Alle blade i $T$ er i dybde mindst $\lfloor\lg(n_3 + 1)\rfloor$. Forkert, antal access operationer ændrer ikke træets størrelse da det er read-only, og således er dybden uafhængig af $n_3$
+\item Alle sorte knuder i $T$ har en afstand til roden, der er et lige tal.  \textbf{Forkert} Et modeksempel, et træ med en sort rod knude og to sorte børn opretholder all invarianter, men de to børn har en distance 1 til rode, hvilket er ulige.
 \end{enumerate}
 
 \end{document}
