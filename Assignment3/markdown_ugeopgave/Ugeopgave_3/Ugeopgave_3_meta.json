@@ -1,0 +1,278 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Algoritmer og Datastrukturer (NDAA04010U)\nUgeopgave 3",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          140.0009765625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          191.84124755859375
+        ],
+        [
+          140.0009765625,
+          191.84124755859375
+        ]
+      ]
+    },
+    {
+      "title": "1 Parallelle algoritmer",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          71.34521484375,
+          290.2977294921875
+        ],
+        [
+          273.81610107421875,
+          290.2977294921875
+        ],
+        [
+          273.81610107421875,
+          307.51312255859375
+        ],
+        [
+          71.34521484375,
+          307.51312255859375
+        ]
+      ]
+    },
+    {
+      "title": "2 Amortiseret analyse",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          70.9716796875,
+          556.8126220703125
+        ],
+        [
+          272.0830078125,
+          556.8126220703125
+        ],
+        [
+          272.0830078125,
+          574.0280151367188
+        ],
+        [
+          70.9716796875,
+          574.0280151367188
+        ]
+      ]
+    },
+    {
+      "title": "3 R\u00f8d-sorte s\u00f8getr\u00e6er",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.94287109375,
+          196.11260986328125
+        ],
+        [
+          272.3355712890625,
+          196.11260986328125
+        ],
+        [
+          272.3355712890625,
+          213.32806396484375
+        ],
+        [
+          71.94287109375,
+          213.32806396484375
+        ]
+      ]
+    },
+    {
+      "title": "4 Inds\u00e6ttelse i r\u00f8d-sorte s\u00f8getr\u00e6er",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.2705078125,
+          622.0055999755859
+        ],
+        [
+          380.1212463378906,
+          622.0055999755859
+        ],
+        [
+          380.1212463378906,
+          639.2209930419922
+        ],
+        [
+          71.2705078125,
+          639.2209930419922
+        ]
+      ]
+    },
+    {
+      "title": "5 K\u00f8retid for r\u00f8d-sorte s\u00f8getr\u00e6er",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          72.0,
+          393.44354248046875
+        ],
+        [
+          367.3990478515625,
+          393.44354248046875
+        ],
+        [
+          367.3990478515625,
+          410.658935546875
+        ],
+        [
+          72.0,
+          410.658935546875
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          249
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "TextInlineMath",
+          2
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          109
+        ],
+        [
+          "Line",
+          28
+        ],
+        [
+          "ListItem",
+          9
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          180
+        ],
+        [
+          "Line",
+          27
+        ],
+        [
+          "ListItem",
+          11
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Ugeopgave_3"
+}

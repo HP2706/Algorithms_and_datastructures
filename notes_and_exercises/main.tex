@@ -984,6 +984,63 @@ MERGE-SORT og (deterministisk) QUICKSORT som beskrevet i CLRS sektion 2.3 og 7.1
 \end{enumerate}
 
 
+\section{Exercises 24/2}
+
+
+\subsection{19.3-a FIB-HEAP-CHANGE-KEY Implementation}
+The operation FIB-HEAP-CHANGE-KEY(H,x,k) changes the key of node x to the value k. Give an efficient implementation of FIB-HEAP-CHANGE-KEY, and analyze the amortized running time of your implementation for the cases in which k is greater than, less than, or equal to x.key.
+
+
+
+
+
+\subsection{19.4-1 Fibonacci Heap Height}
+Professor Pinocchio claims that a Fibonacci heap with n nodes always has height O(lg n). Show that the professor is mistaken by constructing a sequence of Fibonacci-heap operations that creates a Fibonacci heap consisting of just one tree that has height $\omega(lg n)$.
+
+We can construct a Fibonacci heap with height $\Omega(\sqrt{n})$ using the following sequence of operations:
+
+1. Insert n nodes with keys $1, 2, ..., n$ into the heap
+2. Extract-min repeatedly until only $\sqrt{n}$ nodes remain as roots
+3. Perform unions in a way that creates a single path:
+   - Let $x_1, x_2, ..., x_{\sqrt{n}}$ be the remaining roots
+   - For $i = 1$ to $\sqrt{n}-1$:
+     - Link $x_i$ with $x_{i+1}$ making $x_i$ a child of $x_{i+1}$
+
+This creates a single tree with height $\Omega(\sqrt{n})$, which is $\omega(\lg n)$.
+
+The key observation is that while Fibonacci heaps maintain the minimum-heap property and degree bounds, they do not guarantee balanced trees. The sequence above exploits this by creating a highly unbalanced path-like structure.
+
+Therefore, Professor Pinocchio's claim that Fibonacci heaps always have height O(lg n) is incorrect.
+
+
+
+
+\subsection{7 Fibonacci- Heap AD april 2024}
+
+answers 
+1, 4,5,6
+
+\subsection{8 time complexity for Fibonacci- Heap AD april 2024}
+
+answers
+
+1. yes upper bounded by O(n)
+3. yes upper bounded by constant cost + change in potential.
+
+\subsection{17 shortest paths AD april 2024}
+
+everything except {B, E} and {D, E}
+
+
+\subsection{9 AD-June-2024}
+
+2,3,4 as we expand the root node list
+
+
+\subsection{17 AD-June-2024}
+
+
+
 
 \bibliographystyle{plainnat}
 \bibliography{references}
