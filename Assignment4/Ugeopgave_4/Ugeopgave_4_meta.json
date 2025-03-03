@@ -1,0 +1,239 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Algoritmer og Datastrukturer (NDAA04010U)\nUgeopgave 4",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          140.0009765625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          191.84124755859375
+        ],
+        [
+          140.0009765625,
+          191.84124755859375
+        ]
+      ]
+    },
+    {
+      "title": "1 Dynamisk programmering",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          71.5693359375,
+          290.3147277832031
+        ],
+        [
+          322.156982421875,
+          290.3147277832031
+        ],
+        [
+          322.156982421875,
+          308.21484375
+        ],
+        [
+          71.5693359375,
+          308.21484375
+        ]
+      ]
+    },
+    {
+      "title": "2 Huffman koder",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.34521484375,
+          107.36260986328125
+        ],
+        [
+          228.3502655029297,
+          107.36260986328125
+        ],
+        [
+          228.3502655029297,
+          124.57806396484375
+        ],
+        [
+          71.34521484375,
+          124.57806396484375
+        ]
+      ]
+    },
+    {
+      "title": "3 Mere dynamisk programmering",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.49462890625,
+          251.3035888671875
+        ],
+        [
+          369.052734375,
+          251.3035888671875
+        ],
+        [
+          369.052734375,
+          268.576171875
+        ],
+        [
+          71.49462890625,
+          268.576171875
+        ]
+      ]
+    },
+    {
+      "title": "4 Gr\u02daadige algoritmer",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.71875,
+          571.2006225585938
+        ],
+        [
+          262.96875,
+          571.2006225585938
+        ],
+        [
+          262.96875,
+          588.416015625
+        ],
+        [
+          71.71875,
+          588.416015625
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          237
+        ],
+        [
+          "Line",
+          27
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "Code",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          463
+        ],
+        [
+          "Line",
+          47
+        ],
+        [
+          "TextInlineMath",
+          6
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          91
+        ],
+        [
+          "Line",
+          17
+        ],
+        [
+          "TextInlineMath",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Ugeopgave_4"
+}
