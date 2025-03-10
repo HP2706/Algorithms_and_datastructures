@@ -1,0 +1,445 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Algoritmer og Datastrukturer (NDAA04010U)\nUgeopgave 5",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          140.150390625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          152.707763671875
+        ],
+        [
+          461.76275634765625,
+          191.84124755859375
+        ],
+        [
+          140.150390625,
+          191.84124755859375
+        ]
+      ]
+    },
+    {
+      "title": "1 Mindste udsp\u00e6ndende tr\u00e6",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          71.12109375,
+          290.3147277832031
+        ],
+        [
+          327.1839294433594,
+          290.3147277832031
+        ],
+        [
+          327.1839294433594,
+          307.828125
+        ],
+        [
+          71.12109375,
+          307.828125
+        ]
+      ]
+    },
+    {
+      "title": "2 Prim's algoritme",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.419921875,
+          171.70465087890625
+        ],
+        [
+          243.0005645751953,
+          171.70465087890625
+        ],
+        [
+          243.0005645751953,
+          189.2021484375
+        ],
+        [
+          71.419921875,
+          189.2021484375
+        ]
+      ]
+    },
+    {
+      "title": "3 Snit og sikre kanter",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          71.71875,
+          514.6376037597656
+        ],
+        [
+          267.1193542480469,
+          514.6376037597656
+        ],
+        [
+          267.1193542480469,
+          531.8529968261719
+        ],
+        [
+          71.71875,
+          531.8529968261719
+        ]
+      ]
+    },
+    {
+      "title": "4 Korteste veje",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          71.12109375,
+          351.5306091308594
+        ],
+        [
+          214.55859375,
+          351.5306091308594
+        ],
+        [
+          214.55859375,
+          368.7460021972656
+        ],
+        [
+          71.12109375,
+          368.7460021972656
+        ]
+      ]
+    },
+    {
+      "title": "5 Korteste veje",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          71.8681640625,
+          241.6986083984375
+        ],
+        [
+          213.80323791503906,
+          241.6986083984375
+        ],
+        [
+          213.80323791503906,
+          258.9140625
+        ],
+        [
+          71.8681640625,
+          258.9140625
+        ]
+      ]
+    },
+    {
+      "title": "6 Korteste-veje tr\u00e6",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          71.49462890625,
+          107.36260986328125
+        ],
+        [
+          250.716796875,
+          107.36260986328125
+        ],
+        [
+          250.716796875,
+          124.57806396484375
+        ],
+        [
+          71.49462890625,
+          124.57806396484375
+        ]
+      ]
+    },
+    {
+      "title": "7 Valg af datastruktur",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          72.00012969970703,
+          475.4485778808594
+        ],
+        [
+          274.025390625,
+          475.4485778808594
+        ],
+        [
+          274.025390625,
+          492.6639709472656
+        ],
+        [
+          72.00012969970703,
+          492.6639709472656
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          112
+        ],
+        [
+          "Line",
+          33
+        ],
+        [
+          "ListItem",
+          8
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          119
+        ],
+        [
+          "Line",
+          46
+        ],
+        [
+          "ListItem",
+          6
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "Figure",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          226
+        ],
+        [
+          "Line",
+          39
+        ],
+        [
+          "ListItem",
+          12
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          114
+        ],
+        [
+          "Line",
+          39
+        ],
+        [
+          "ListItem",
+          16
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          257
+        ],
+        [
+          "Line",
+          44
+        ],
+        [
+          "ListItem",
+          13
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          31
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Ugeopgave_5"
+}
